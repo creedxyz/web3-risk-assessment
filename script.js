@@ -737,10 +737,17 @@ function exportToPDF() {
         controlsData[funcName].forEach((control, controlIndex) => {
             const controlData = assessmentData.controls[funcName][control.id];
             const status = controlData.status || 'Not Set';
+            const explanation = controlData.explanation || '';
 
-            // Calculate row height based on requirement text
+            // Calculate row height based on requirement text and explanation
             const reqLines = doc.splitTextToSize(control.requirement, controlColWidths[2] - 5);
-            const rowHeight = Math.max(12, reqLines.length * 4 + 4);
+            let rowHeight = Math.max(12, reqLines.length * 4 + 4);
+
+            // Add space for explanation if it exists
+            if (explanation.trim()) {
+                const explLines = doc.splitTextToSize(`Notes: ${explanation}`, controlColWidths[2] - 5);
+                rowHeight += (explLines.length * 4) + 6; // Extra spacing between requirement and notes
+            }
 
             yPosition = checkPageBreak(yPosition, rowHeight + 5);
 
@@ -782,9 +789,23 @@ function exportToPDF() {
 
             // Control requirement
             setTextColor(colors.black); // Dark text on light background
+            let currentY = startY;
             reqLines.forEach((line, index) => {
-                doc.text(line, xPos, startY + (index * 4));
+                doc.text(line, xPos, currentY + (index * 4));
             });
+            currentY += reqLines.length * 4;
+
+            // Add explanation/notes if they exist
+            if (explanation.trim()) {
+                currentY += 4; // Add some spacing
+                setTextColor(colors.gray); // Slightly lighter for notes
+                doc.setFont('helvetica', 'italic');
+                const explLines = doc.splitTextToSize(`Notes: ${explanation}`, controlColWidths[2] - 5);
+                explLines.forEach((line, index) => {
+                    doc.text(line, xPos, currentY + (index * 4));
+                });
+                doc.setFont('helvetica', 'normal'); // Reset font
+            }
 
             yPosition += rowHeight;
         });
