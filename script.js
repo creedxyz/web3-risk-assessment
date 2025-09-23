@@ -152,6 +152,7 @@ const importBtn = document.getElementById('importBtn');
 const exportBtn = document.getElementById('exportBtn');
 const exportPdfBtn = document.getElementById('exportPdfBtn');
 const fileInput = document.getElementById('fileInput');
+const clearCacheBtn = document.getElementById('clearCacheBtn');
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -200,25 +201,32 @@ function createControlElement(functionName, control) {
     div.className = 'control-item';
 
     div.innerHTML = `
-        <div class="control-header">
-            <div class="control-id">${control.id}</div>
-            <div class="control-status">
-                <select id="${control.id}-status" data-function="${functionName}" data-control="${control.id}">
-                    <option value="">Select Status</option>
-                    <option value="Implemented">Implemented</option>
-                    <option value="Not Implemented">Not Implemented</option>
-                    <option value="Not Applicable">Not Applicable</option>
-                </select>
+        <div class="save-indicator" id="${control.id}-indicator">Saved</div>
+        <div class="control-main">
+            <div class="control-left">
+                <div class="control-header">
+                    <div class="control-id">${control.id}</div>
+                    <div class="control-status">
+                        <select id="${control.id}-status" data-function="${functionName}" data-control="${control.id}">
+                            <option value="">Select Status</option>
+                            <option value="Implemented">Implemented</option>
+                            <option value="Not Implemented">Not Implemented</option>
+                            <option value="Not Applicable">Not Applicable</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-requirement">${control.requirement}</div>
             </div>
-        </div>
-        <div class="control-requirement">${control.requirement}</div>
-        <div class="control-explanation">
-            <textarea
-                id="${control.id}-explanation"
-                placeholder="Add explanation or notes..."
-                data-function="${functionName}"
-                data-control="${control.id}"
-            ></textarea>
+            <div class="control-right">
+                <div class="control-explanation">
+                    <textarea
+                        id="${control.id}-explanation"
+                        placeholder="Add notes..."
+                        data-function="${functionName}"
+                        data-control="${control.id}"
+                    ></textarea>
+                </div>
+            </div>
         </div>
     `;
 
@@ -232,6 +240,9 @@ function setupEventListeners() {
     exportBtn.addEventListener('click', exportToJSON);
     exportPdfBtn.addEventListener('click', exportToPDF);
     fileInput.addEventListener('change', importFromJSON);
+
+    // Clear cache functionality
+    clearCacheBtn.addEventListener('click', clearAllData);
 
     // Form field listeners
     document.addEventListener('change', function(e) {
@@ -260,6 +271,7 @@ function handleStatusChange(element) {
 
     assessmentData.controls[functionName][controlId].status = element.value;
     updateSummaryTable();
+    showSaveIndicator(controlId);
     saveToLocalStorage();
 }
 
@@ -268,12 +280,14 @@ function handleExplanationChange(element) {
     const controlId = element.getAttribute('data-control');
 
     assessmentData.controls[functionName][controlId].explanation = element.value;
+    showSaveIndicator(controlId);
     saveToLocalStorage();
 }
 
 function handleMetadataChange(element) {
     const field = element.id;
     assessmentData.metadata[field] = element.value;
+    showGlobalSaveIndicator();
     saveToLocalStorage();
 }
 
@@ -533,7 +547,7 @@ function exportToPDF() {
         }
     });
 
-    // Control details for each function
+    // Control details for each function (table format)
     functionNames.forEach(funcName => {
         yPosition = checkPageBreak(yPosition, 50);
         yPosition += 10;
@@ -543,35 +557,71 @@ function exportToPDF() {
         doc.text(`Function: ${funcName.charAt(0).toUpperCase() + funcName.slice(1)}`, margin, yPosition);
         yPosition += 15;
 
-        controlsData[funcName].forEach(control => {
-            yPosition = checkPageBreak(yPosition, 25);
+        // Table headers for controls
+        const controlHeaders = ['ID', 'Status', 'Control Requirement', 'Explanation'];
+        const controlColWidths = [25, 30, 80, 40];
+        let xPos = margin;
 
-            const controlData = assessmentData.controls[funcName][control.id];
-
-            // Control ID and Status
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'bold');
-            doc.text(`${control.id}: `, margin, yPosition);
-
-            if (controlData.status) {
-                doc.setFont('helvetica', 'normal');
-                doc.text(`[${controlData.status}]`, margin + 30, yPosition);
-            }
-            yPosition += lineHeight;
-
-            // Control requirement
-            doc.setFont('helvetica', 'normal');
-            yPosition = addWrappedText(control.requirement, margin, yPosition, maxLineWidth, 9);
-
-            // Explanation if present
-            if (controlData.explanation) {
-                yPosition += 3;
-                doc.setFont('helvetica', 'italic');
-                yPosition = addWrappedText(`Note: ${controlData.explanation}`, margin, yPosition, maxLineWidth, 8);
-            }
-
-            yPosition += 5;
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        controlHeaders.forEach((header, i) => {
+            doc.text(header, xPos, yPosition);
+            xPos += controlColWidths[i];
         });
+        yPosition += lineHeight;
+
+        // Draw header line
+        doc.setDrawColor(200);
+        doc.line(margin, yPosition - 2, pageWidth - margin, yPosition - 2);
+        yPosition += 3;
+
+        // Control rows
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+
+        controlsData[funcName].forEach(control => {
+            const controlData = assessmentData.controls[funcName][control.id];
+            const rowHeight = Math.max(15, Math.ceil(control.requirement.length / 50) * 5);
+
+            yPosition = checkPageBreak(yPosition, rowHeight + 5);
+
+            xPos = margin;
+            const startY = yPosition;
+
+            // Control ID
+            doc.setFont('helvetica', 'bold');
+            doc.text(control.id, xPos, yPosition);
+            xPos += controlColWidths[0];
+
+            // Status
+            doc.setFont('helvetica', 'normal');
+            const status = controlData.status || 'Not Set';
+            doc.text(status, xPos, yPosition);
+            xPos += controlColWidths[1];
+
+            // Control requirement (wrapped)
+            const reqLines = doc.splitTextToSize(control.requirement, controlColWidths[2] - 5);
+            reqLines.forEach((line, index) => {
+                doc.text(line, xPos, yPosition + (index * 4));
+            });
+            xPos += controlColWidths[2];
+
+            // Explanation (wrapped)
+            if (controlData.explanation) {
+                const explLines = doc.splitTextToSize(controlData.explanation, controlColWidths[3] - 5);
+                explLines.forEach((line, index) => {
+                    doc.text(line, xPos, yPosition + (index * 4));
+                });
+            }
+
+            yPosition += Math.max(reqLines.length * 4, 8) + 3;
+
+            // Draw row separator
+            doc.setDrawColor(230);
+            doc.line(margin, yPosition - 1, pageWidth - margin, yPosition - 1);
+        });
+
+        yPosition += 5;
     });
 
     // Save the PDF
@@ -593,7 +643,94 @@ function debounce(func, wait) {
 }
 
 // Auto-save with debouncing
-const debouncedSave = debounce(saveToLocalStorage, 1000);
+const debouncedSave = debounce(saveToLocalStorage, 800);
+
+// Save indicator functions
+function showSaveIndicator(controlId) {
+    const indicator = document.getElementById(`${controlId}-indicator`);
+    if (indicator) {
+        indicator.classList.remove('saved');
+        indicator.classList.add('saving');
+        indicator.textContent = 'Saving...';
+        indicator.classList.add('show');
+
+        setTimeout(() => {
+            indicator.classList.remove('saving');
+            indicator.classList.add('saved');
+            indicator.textContent = 'Saved';
+
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 1500);
+        }, 500);
+    }
+}
+
+function showGlobalSaveIndicator() {
+    // Create a temporary indicator for metadata changes
+    const existingIndicator = document.querySelector('.global-save-indicator');
+    if (existingIndicator) {
+        existingIndicator.remove();
+    }
+
+    const indicator = document.createElement('div');
+    indicator.className = 'save-indicator global-save-indicator show saved';
+    indicator.textContent = 'Saved';
+    indicator.style.position = 'fixed';
+    indicator.style.top = '20px';
+    indicator.style.right = '20px';
+    indicator.style.zIndex = '1000';
+
+    document.body.appendChild(indicator);
+
+    setTimeout(() => {
+        indicator.classList.remove('show');
+        setTimeout(() => {
+            if (indicator.parentNode) {
+                indicator.parentNode.removeChild(indicator);
+            }
+        }, 300);
+    }, 1500);
+}
+
+// Clear all data function
+function clearAllData() {
+    if (confirm('Are you sure you want to clear all saved data? This action cannot be undone.')) {
+        localStorage.removeItem('creed-assessment-data');
+
+        // Reset assessment data
+        assessmentData = {
+            metadata: {
+                website: '',
+                documentation: '',
+                contracts: '',
+                github: '',
+                twitter: '',
+                discord: '',
+                telegram: ''
+            },
+            controls: {}
+        };
+
+        // Reinitialize controls structure
+        Object.keys(controlsData).forEach(functionName => {
+            assessmentData.controls[functionName] = {};
+            controlsData[functionName].forEach(control => {
+                assessmentData.controls[functionName][control.id] = {
+                    status: '',
+                    explanation: ''
+                };
+            });
+        });
+
+        // Update UI
+        updateFormFields();
+        updateSummaryTable();
+
+        // Show confirmation
+        alert('All data has been cleared successfully.');
+    }
+}
 
 // Update event listeners to use debounced save
 document.addEventListener('input', function(e) {
