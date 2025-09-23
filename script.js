@@ -418,18 +418,45 @@ function importFromJSON(event) {
     event.target.value = ''; // Reset file input
 }
 
-// PDF Export function
+// PDF Export function with professional Creed styling
 function exportToPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    let yPosition = 20;
-    const lineHeight = 7;
+    let yPosition = 30;
+    const lineHeight = 6;
     const margin = 20;
     const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
     const maxLineWidth = pageWidth - (margin * 2);
 
-    // Helper function to add text with line wrapping
+    // Creed color scheme (converted to RGB for PDF) - optimized for readability
+    const colors = {
+        primary: [0, 255, 136],      // #00ff88 - Creed green
+        primaryDark: [0, 204, 106],  // #00cc6a - Darker green for better contrast
+        dark: [26, 26, 26],          // #1a1a1a - Dark background (lighter than before)
+        darkTable: [35, 35, 35],     // #232323 - Table background
+        gray: [102, 102, 102],       // #666666 - Gray text
+        lightGray: [170, 170, 170],  // #aaaaaa - Light gray
+        white: [255, 255, 255],      // #ffffff - White
+        black: [0, 0, 0],            // #000000 - True black
+        accent: [60, 60, 60],        // #3c3c3c - Accent gray (lighter)
+        lightBackground: [245, 245, 245] // #f5f5f5 - Light background for readability
+    };
+
+    // Helper functions
+    function setTextColor(colorArray) {
+        doc.setTextColor(colorArray[0], colorArray[1], colorArray[2]);
+    }
+
+    function setFillColor(colorArray) {
+        doc.setFillColor(colorArray[0], colorArray[1], colorArray[2]);
+    }
+
+    function setDrawColor(colorArray) {
+        doc.setDrawColor(colorArray[0], colorArray[1], colorArray[2]);
+    }
+
     function addWrappedText(text, x, y, maxWidth, fontSize = 10) {
         doc.setFontSize(fontSize);
         const lines = doc.splitTextToSize(text, maxWidth);
@@ -439,50 +466,137 @@ function exportToPDF() {
         return y + (lines.length * lineHeight);
     }
 
-    // Helper function to check if we need a new page
-    function checkPageBreak(currentY, neededSpace = 30) {
-        if (currentY + neededSpace > doc.internal.pageSize.getHeight() - margin) {
+    function checkPageBreak(currentY, neededSpace = 40) {
+        if (currentY + neededSpace > pageHeight - margin - 20) {
+            addFooter();
             doc.addPage();
-            return margin;
+            addHeader();
+            return 50;
         }
         return currentY;
     }
 
-    // Title
+    function addHeader() {
+        // Add Creed header background
+        setFillColor(colors.dark);
+        doc.rect(0, 0, pageWidth, 45, 'F');
+
+        // Add Creed green accent strip
+        setFillColor(colors.primary);
+        doc.rect(0, 40, pageWidth, 3, 'F');
+
+        // Creed logo/title
+        doc.setFontSize(24);
+        doc.setFont('helvetica', 'bold');
+        setTextColor(colors.primary);
+        doc.text('CREED', margin, 25);
+
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        setTextColor(colors.white);
+        doc.text('Risk Assessment Framework', margin, 35);
+
+        // Date and version
+        doc.setFontSize(9);
+        setTextColor(colors.lightGray);
+        const today = new Date().toLocaleDateString();
+        doc.text(`Generated: ${today}`, pageWidth - margin - 40, 25);
+        doc.text('v1.0', pageWidth - margin - 15, 35);
+    }
+
+    function addFooter() {
+        const footerY = pageHeight - 15;
+
+        // Footer line
+        setDrawColor(colors.primary);
+        doc.setLineWidth(0.5);
+        doc.line(margin, footerY - 5, pageWidth - margin, footerY - 5);
+
+        // Footer text
+        doc.setFontSize(8);
+        setTextColor(colors.gray);
+        doc.text('© 2024 Creed Collective • thecreed.xyz', margin, footerY);
+
+        // Page number
+        const pageNum = doc.internal.getCurrentPageInfo().pageNumber;
+        doc.text(`Page ${pageNum}`, pageWidth - margin - 20, footerY);
+    }
+
+    // Start PDF generation
+    addHeader();
+    yPosition = 55;
+
+    // Report title
     doc.setFontSize(20);
     doc.setFont('helvetica', 'bold');
-    doc.text('Creed Risk Assessment Report', margin, yPosition);
+    setTextColor(colors.black);
+    doc.text('Cybersecurity Risk Assessment Report', margin, yPosition);
     yPosition += 15;
 
-    // Executive Summary
-    doc.setFontSize(16);
+    // Subtitle with assessment date
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'normal');
+    setTextColor(colors.gray);
+    doc.text(`Based on NIST Cybersecurity Framework v2.0`, margin, yPosition);
+    yPosition += 20;
+
+    // Executive Summary Section
+    yPosition = checkPageBreak(yPosition, 60);
+
+    // Section header with background
+    setFillColor(colors.accent);
+    doc.rect(margin, yPosition - 5, maxLineWidth, 12, 'F');
+
+    doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Executive Summary', margin, yPosition);
-    yPosition += 10;
+    setTextColor(colors.primary);
+    doc.text('Executive Summary', margin + 5, yPosition + 5);
+    yPosition += 20;
 
-    // Summary Table
-    const functionNames = ['govern', 'identify', 'protect', 'detect', 'respond', 'recover'];
-    const totalCounts = [31, 21, 22, 11, 13, 8];
-
+    // Summary description
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
+    setTextColor(colors.black);
+    const summaryText = 'This assessment evaluates cybersecurity maturity across six critical functions: Govern, Identify, Protect, Detect, Respond, and Recover. Each control is assessed for implementation status.';
+    yPosition = addWrappedText(summaryText, margin, yPosition, maxLineWidth, 10);
+    yPosition += 10;
+
+    // Summary Table with enhanced styling
+    const functionNames = ['govern', 'identify', 'protect', 'detect', 'respond', 'recover'];
+    const functionLabels = ['Govern', 'Identify', 'Protect', 'Detect', 'Respond', 'Recover'];
+    const totalCounts = [31, 21, 22, 11, 13, 8];
+
+    // Table header background
+    setFillColor(colors.primary);
+    doc.rect(margin, yPosition, maxLineWidth, 12, 'F');
 
     // Table headers
-    const headers = ['Function', 'Total', 'Implemented', 'Not Impl.', 'Not Appl.'];
-    const colWidths = [30, 20, 25, 25, 25];
-    let xPos = margin;
+    const headers = ['Function', 'Total', 'Implemented', 'Not Impl.', 'Not Appl.', 'Progress'];
+    const colWidths = [30, 20, 25, 25, 25, 25];
+    let xPos = margin + 3;
 
+    doc.setFontSize(9);
     doc.setFont('helvetica', 'bold');
+    setTextColor([0, 0, 0]); // Black text on green background
     headers.forEach((header, i) => {
-        doc.text(header, xPos, yPosition);
+        doc.text(header, xPos, yPosition + 8);
         xPos += colWidths[i];
     });
-    yPosition += lineHeight;
+    yPosition += 12;
 
-    // Table data
+    // Table rows with alternating colors - using light backgrounds for readability
     doc.setFont('helvetica', 'normal');
     functionNames.forEach((funcName, index) => {
-        yPosition = checkPageBreak(yPosition);
+        yPosition = checkPageBreak(yPosition, 15);
+
+        // Alternating row background - light colors for better readability
+        if (index % 2 === 0) {
+            setFillColor(colors.lightBackground); // Light gray background
+            doc.rect(margin, yPosition, maxLineWidth, 10, 'F');
+        } else {
+            setFillColor(colors.white); // White background
+            doc.rect(margin, yPosition, maxLineWidth, 10, 'F');
+        }
 
         const counts = {
             implemented: 0,
@@ -498,131 +612,188 @@ function exportToPDF() {
             }
         });
 
-        xPos = margin;
+        const total = totalCounts[index];
+        const applicable = total - counts.notApplicable;
+        const progress = applicable > 0 ? Math.round((counts.implemented / applicable) * 100) : 0;
+
+        xPos = margin + 3;
+        setTextColor(colors.black); // Dark text on light background
+
         const rowData = [
-            funcName.charAt(0).toUpperCase() + funcName.slice(1),
-            totalCounts[index].toString(),
+            functionLabels[index],
+            total.toString(),
             counts.implemented.toString(),
             counts.notImplemented.toString(),
-            counts.notApplicable.toString()
+            counts.notApplicable.toString(),
+            `${progress}%`
         ];
 
         rowData.forEach((data, i) => {
-            doc.text(data, xPos, yPosition);
+            if (i === 5 && progress > 0) { // Progress column in green if > 0
+                setTextColor(colors.primaryDark); // Darker green for better contrast on light background
+            } else {
+                setTextColor(colors.black); // Black text on light background
+            }
+            doc.text(data, xPos, yPosition + 7);
             xPos += colWidths[i];
         });
-        yPosition += lineHeight;
+        yPosition += 10;
     });
 
-    yPosition += 10;
+    yPosition += 15;
 
-    // Resources section
-    yPosition = checkPageBreak(yPosition);
+    // Resources Section
+    yPosition = checkPageBreak(yPosition, 40);
+
+    setFillColor(colors.accent);
+    doc.rect(margin, yPosition - 5, maxLineWidth, 12, 'F');
+
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Resources', margin, yPosition);
-    yPosition += 10;
-
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
+    setTextColor(colors.primary);
+    doc.text('Project Resources', margin + 5, yPosition + 5);
+    yPosition += 20;
 
     const resources = [
         ['Website', assessmentData.metadata.website],
         ['Documentation', assessmentData.metadata.documentation],
-        ['Contracts', assessmentData.metadata.contracts],
-        ['Github', assessmentData.metadata.github],
+        ['Smart Contracts', assessmentData.metadata.contracts],
+        ['GitHub Repository', assessmentData.metadata.github],
         ['Twitter', assessmentData.metadata.twitter],
         ['Discord', assessmentData.metadata.discord],
         ['Telegram', assessmentData.metadata.telegram]
     ];
 
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+
     resources.forEach(([label, value]) => {
-        if (value) {
-            yPosition = checkPageBreak(yPosition);
-            doc.setFont('helvetica', 'bold');
-            doc.text(`${label}: `, margin, yPosition);
-            doc.setFont('helvetica', 'normal');
-            doc.text(value, margin + 30, yPosition);
-            yPosition += lineHeight;
+        if (value && value.trim()) {
+            yPosition = checkPageBreak(yPosition, 8);
+
+            setTextColor(colors.primaryDark);
+            doc.text(`${label}:`, margin, yPosition);
+
+            setTextColor(colors.black);
+            doc.text(value, margin + 40, yPosition);
+            yPosition += 8;
         }
     });
 
-    // Control details for each function (table format)
-    functionNames.forEach(funcName => {
-        yPosition = checkPageBreak(yPosition, 50);
-        yPosition += 10;
+    // Control Details for each function
+    functionNames.forEach((funcName, funcIndex) => {
+        yPosition = checkPageBreak(yPosition, 80);
+        yPosition += 15;
+
+        // Function section header
+        setFillColor(colors.primary);
+        doc.rect(margin, yPosition - 8, maxLineWidth, 15, 'F');
 
         doc.setFontSize(16);
         doc.setFont('helvetica', 'bold');
-        doc.text(`Function: ${funcName.charAt(0).toUpperCase() + funcName.slice(1)}`, margin, yPosition);
+        setTextColor([0, 0, 0]);
+        doc.text(`Function: ${functionLabels[funcIndex]}`, margin + 5, yPosition + 3);
         yPosition += 15;
 
-        // Table headers for controls
-        const controlHeaders = ['ID', 'Status', 'Control Requirement', 'Explanation'];
-        const controlColWidths = [25, 30, 80, 40];
-        let xPos = margin;
+        // Function description
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'italic');
+        setTextColor(colors.gray);
+        const descriptions = {
+            govern: 'Establish cybersecurity risk management strategy, expectations, and policy.',
+            identify: 'Understand organizational assets, suppliers, and related cybersecurity risks.',
+            protect: 'Implement safeguards to manage cybersecurity risks.',
+            detect: 'Identify cybersecurity attacks and compromises in a timely manner.',
+            respond: 'Take action regarding detected cybersecurity incidents.',
+            recover: 'Restore assets and operations affected by cybersecurity incidents.'
+        };
+
+        yPosition = addWrappedText(descriptions[funcName], margin, yPosition, maxLineWidth, 9);
+        yPosition += 12;
+
+        // Controls table for this function
+        const controlHeaders = ['ID', 'Status', 'Control Requirement'];
+        const controlColWidths = [25, 35, 110];
+
+        // Table header - using light background with dark text
+        setFillColor(colors.lightBackground);
+        doc.rect(margin, yPosition, maxLineWidth, 10, 'F');
 
         doc.setFontSize(9);
         doc.setFont('helvetica', 'bold');
+        setTextColor(colors.black); // Dark text on light background
+
+        let xPos = margin + 2;
         controlHeaders.forEach((header, i) => {
-            doc.text(header, xPos, yPosition);
+            doc.text(header, xPos, yPosition + 7);
             xPos += controlColWidths[i];
         });
-        yPosition += lineHeight;
-
-        // Draw header line
-        doc.setDrawColor(200);
-        doc.line(margin, yPosition - 2, pageWidth - margin, yPosition - 2);
-        yPosition += 3;
+        yPosition += 10;
 
         // Control rows
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(8);
 
-        controlsData[funcName].forEach(control => {
+        controlsData[funcName].forEach((control, controlIndex) => {
             const controlData = assessmentData.controls[funcName][control.id];
-            const rowHeight = Math.max(15, Math.ceil(control.requirement.length / 50) * 5);
+            const status = controlData.status || 'Not Set';
+
+            // Calculate row height based on requirement text
+            const reqLines = doc.splitTextToSize(control.requirement, controlColWidths[2] - 5);
+            const rowHeight = Math.max(12, reqLines.length * 4 + 4);
 
             yPosition = checkPageBreak(yPosition, rowHeight + 5);
 
-            xPos = margin;
-            const startY = yPosition;
-
-            // Control ID
-            doc.setFont('helvetica', 'bold');
-            doc.text(control.id, xPos, yPosition);
-            xPos += controlColWidths[0];
-
-            // Status
-            doc.setFont('helvetica', 'normal');
-            const status = controlData.status || 'Not Set';
-            doc.text(status, xPos, yPosition);
-            xPos += controlColWidths[1];
-
-            // Control requirement (wrapped)
-            const reqLines = doc.splitTextToSize(control.requirement, controlColWidths[2] - 5);
-            reqLines.forEach((line, index) => {
-                doc.text(line, xPos, yPosition + (index * 4));
-            });
-            xPos += controlColWidths[2];
-
-            // Explanation (wrapped)
-            if (controlData.explanation) {
-                const explLines = doc.splitTextToSize(controlData.explanation, controlColWidths[3] - 5);
-                explLines.forEach((line, index) => {
-                    doc.text(line, xPos, yPosition + (index * 4));
-                });
+            // Alternating row background - light colors for readability
+            if (controlIndex % 2 === 0) {
+                setFillColor(colors.lightBackground); // Light gray background
+                doc.rect(margin, yPosition, maxLineWidth, rowHeight, 'F');
+            } else {
+                setFillColor(colors.white); // White background
+                doc.rect(margin, yPosition, maxLineWidth, rowHeight, 'F');
             }
 
-            yPosition += Math.max(reqLines.length * 4, 8) + 3;
+            xPos = margin + 2;
+            const startY = yPosition + 6;
 
-            // Draw row separator
-            doc.setDrawColor(230);
-            doc.line(margin, yPosition - 1, pageWidth - margin, yPosition - 1);
+            // Control ID
+            setTextColor(colors.primaryDark); // Darker green for better contrast
+            doc.setFont('helvetica', 'bold');
+            doc.text(control.id, xPos, startY);
+            xPos += controlColWidths[0];
+
+            // Status with color coding
+            doc.setFont('helvetica', 'normal');
+            switch(status) {
+                case 'Implemented':
+                    setTextColor(colors.primaryDark); // Darker green for better contrast
+                    break;
+                case 'Not Implemented':
+                    setTextColor([204, 50, 50]); // Darker red for better contrast
+                    break;
+                case 'Not Applicable':
+                    setTextColor(colors.gray);
+                    break;
+                default:
+                    setTextColor(colors.gray);
+            }
+            doc.text(status, xPos, startY);
+            xPos += controlColWidths[1];
+
+            // Control requirement
+            setTextColor(colors.black); // Dark text on light background
+            reqLines.forEach((line, index) => {
+                doc.text(line, xPos, startY + (index * 4));
+            });
+
+            yPosition += rowHeight;
         });
 
-        yPosition += 5;
+        yPosition += 10;
     });
+
+    // Add footer to last page
+    addFooter();
 
     // Save the PDF
     const fileName = `creed-assessment-${new Date().toISOString().split('T')[0]}.pdf`;

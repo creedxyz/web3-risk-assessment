@@ -25,13 +25,16 @@
         </header>
 
         <nav class="tab-navigation">
-            <button class="tab-button active" data-tab="summary">Executive Summary</button>
-            <button class="tab-button" data-tab="govern">Govern</button>
-            <button class="tab-button" data-tab="identify">Identify</button>
-            <button class="tab-button" data-tab="protect">Protect</button>
-            <button class="tab-button" data-tab="detect">Detect</button>
-            <button class="tab-button" data-tab="respond">Respond</button>
-            <button class="tab-button" data-tab="recover">Recover</button>
+            <div class="tab-buttons-left">
+                <button class="tab-button active" data-tab="summary">Executive Summary</button>
+                <button class="tab-button" data-tab="govern">Govern</button>
+                <button class="tab-button" data-tab="identify">Identify</button>
+                <button class="tab-button" data-tab="protect">Protect</button>
+                <button class="tab-button" data-tab="detect">Detect</button>
+                <button class="tab-button" data-tab="respond">Respond</button>
+                <button class="tab-button" data-tab="recover">Recover</button>
+            </div>
+            <button class="tab-button about-tab" data-tab="about">About</button>
         </nav>
 
         <main class="main-content">
@@ -211,6 +214,162 @@
                         Assets and operations affected by a cybersecurity incident are restored. RECOVER supports the timely restoration of normal operations to reduce the effects of cybersecurity incidents and enable appropriate communication during recovery efforts.
                     </p>
                     <div id="recover-controls" class="controls-container"></div>
+                </div>
+            </div>
+
+            <!-- About Tab -->
+            <div id="about" class="tab-content">
+                <div class="section">
+                    <h2>About This Risk Assessment Framework</h2>
+
+                    <div class="about-content">
+                        <div class="about-section">
+                            <h3>Comprehensive Risk Assessment Methodology</h3>
+                            <p class="description">
+                                Creed performs detailed risk assessments for DeFi protocols, NFT platforms, DAOs, and the entire Web3 ecosystem using a newly standardized methodology based on the <strong>NIST Capability Maturity Model (CMM)</strong>, <strong>Cybersecurity Framework v2.0 (CSF)</strong>, and <strong>Secure Controls Framework (SCF)</strong>.
+                            </p>
+                            <p class="description">
+                                Our assessments evaluate projects across six critical functions: <span class="highlight">Govern</span>, <span class="highlight">Identify</span>, <span class="highlight">Protect</span>, <span class="highlight">Detect</span>, <span class="highlight">Respond</span>, and <span class="highlight">Recover</span> - providing a comprehensive view of an organization's cybersecurity posture and maturity.
+                            </p>
+                        </div>
+
+                        <div class="about-section">
+                            <h3>The Six Critical Functions</h3>
+                            <div class="functions-grid">
+                                <div class="function-card">
+                                    <h4>Govern</h4>
+                                    <p>Establish cybersecurity risk management strategy, expectations, and policy framework.</p>
+                                    <span class="control-count">31 Controls</span>
+                                </div>
+                                <div class="function-card">
+                                    <h4>Identify</h4>
+                                    <p>Understand organizational assets, suppliers, and related cybersecurity risks.</p>
+                                    <span class="control-count">21 Controls</span>
+                                </div>
+                                <div class="function-card">
+                                    <h4>Protect</h4>
+                                    <p>Implement safeguards to manage cybersecurity risks and prevent incidents.</p>
+                                    <span class="control-count">22 Controls</span>
+                                </div>
+                                <div class="function-card">
+                                    <h4>Detect</h4>
+                                    <p>Identify cybersecurity attacks and compromises in a timely manner.</p>
+                                    <span class="control-count">11 Controls</span>
+                                </div>
+                                <div class="function-card">
+                                    <h4>Respond</h4>
+                                    <p>Take appropriate action regarding detected cybersecurity incidents.</p>
+                                    <span class="control-count">13 Controls</span>
+                                </div>
+                                <div class="function-card">
+                                    <h4>Recover</h4>
+                                    <p>Restore assets and operations affected by cybersecurity incidents.</p>
+                                    <span class="control-count">8 Controls</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="about-section">
+                            <h3>Professional Assessment Process</h3>
+                            <p class="description">
+                                To ensure thorough and accurate risk assessments, Creed follows a structured and transparent approach:
+                            </p>
+                            <div class="process-steps">
+                                <div class="step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h4>Pre-Interview Questionnaire</h4>
+                                        <p>Initial information gathering to understand the client's risk profile and identify areas requiring deeper exploration.</p>
+                                    </div>
+                                </div>
+                                <div class="step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h4>One-Hour Interview</h4>
+                                        <p>Detailed interview with stakeholders following structured guidelines to gather comprehensive insights.</p>
+                                    </div>
+                                </div>
+                                <div class="step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <h4>Recording and Documentation</h4>
+                                        <p>All interviews are recorded with detailed notes to ensure accurate assessment completion.</p>
+                                    </div>
+                                </div>
+                                <div class="step">
+                                    <div class="step-number">4</div>
+                                    <div class="step-content">
+                                        <h4>Report Compilation</h4>
+                                        <p>Comprehensive analysis and report creation based on collected data and expert evaluation.</p>
+                                    </div>
+                                </div>
+                                <div class="step">
+                                    <div class="step-number">5</div>
+                                    <div class="step-content">
+                                        <h4>Peer Review</h4>
+                                        <p>Independent team review ensures accuracy, consistency, and objective evaluation of all assessments.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="about-section">
+                            <h3>Risk Maturity Tiers</h3>
+                            <p class="description">
+                                Our assessments use the Capability Maturity Model to classify organizations across five tiers:
+                            </p>
+                            <div class="tiers-grid">
+                                <div class="tier-card tier-0">
+                                    <h4>Tier 0: Non-existent</h4>
+                                    <p>Risk governance and management practices are not defined or performed.</p>
+                                </div>
+                                <div class="tier-card tier-1">
+                                    <h4>Tier 1: Initial</h4>
+                                    <p>Risk management performed informally on an ad hoc, case-by-case basis.</p>
+                                </div>
+                                <div class="tier-card tier-2">
+                                    <h4>Tier 2: Repeatable</h4>
+                                    <p>Risk management practices are approved by management but may lack organization-wide policy.</p>
+                                </div>
+                                <div class="tier-card tier-3">
+                                    <h4>Tier 3: Defined</h4>
+                                    <p>Well-defined policies and processes documented, standardized, and integrated across the organization.</p>
+                                </div>
+                                <div class="tier-card tier-4">
+                                    <h4>Tier 4: Capable</h4>
+                                    <p>Quantitatively controlled risk management with formally approved and expressed policies.</p>
+                                </div>
+                                <div class="tier-card tier-5">
+                                    <h4>Tier 5: Efficient</h4>
+                                    <p>Continuously improving, world-class practices with organization-wide risk culture integration.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="about-section">
+                            <h3>About Creed</h3>
+                            <p class="description">
+                                Creed is a grassroots collective of security professionals dedicated to democratizing Web3 security. We combine deep technical expertise with standardized methodologies to provide comprehensive cybersecurity assessments for the decentralized ecosystem.
+                            </p>
+
+                            <div class="links-section">
+                                <h4>Learn More & View Past Assessments</h4>
+                                <div class="external-links">
+                                    <a href="https://thecreed.xyz/riskassessments" target="_blank" class="external-link">
+                                        View Published Risk Assessments
+                                    </a>
+                                    <a href="https://thecreed.xyz" target="_blank" class="external-link">
+                                        Visit Creed Website
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="open-source-note">
+                                <h4>Open Source Framework</h4>
+                                <p>This assessment framework is open source, designed to democratize cybersecurity risk assessment while supporting the professional services offered by the Creed collective.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
