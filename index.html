@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creed Risk Assessment Framework</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>CREED</h1>
+                    <span class="subtitle">Risk Assessment Framework</span>
+                </div>
+                <div class="header-actions">
+                    <button id="importBtn" class="btn btn-secondary">Import JSON</button>
+                    <button id="exportBtn" class="btn btn-secondary">Export JSON</button>
+                    <button id="exportPdfBtn" class="btn btn-primary">Export PDF</button>
+                </div>
+            </div>
+        </header>
+
+        <nav class="tab-navigation">
+            <button class="tab-button active" data-tab="summary">Executive Summary</button>
+            <button class="tab-button" data-tab="govern">Govern</button>
+            <button class="tab-button" data-tab="identify">Identify</button>
+            <button class="tab-button" data-tab="protect">Protect</button>
+            <button class="tab-button" data-tab="detect">Detect</button>
+            <button class="tab-button" data-tab="respond">Respond</button>
+            <button class="tab-button" data-tab="recover">Recover</button>
+        </nav>
+
+        <main class="main-content">
+            <!-- Executive Summary Tab -->
+            <div id="summary" class="tab-content active">
+                <div class="section">
+                    <h2>Executive Summary</h2>
+                    <p class="description">
+                        The evaluation is based on the interview conducted with the main stakeholders of the project as defined by the project's core team. Furthermore, any publicly available information about the project was used to fill in the gaps.
+                    </p>
+
+                    <div class="summary-table-container">
+                        <table class="summary-table">
+                            <thead>
+                                <tr>
+                                    <th>Function</th>
+                                    <th>Total Controls</th>
+                                    <th>Implemented</th>
+                                    <th>Not Implemented</th>
+                                    <th>Not Applicable</th>
+                                    <th>Tier</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Govern</td>
+                                    <td>31</td>
+                                    <td id="govern-implemented">0</td>
+                                    <td id="govern-not-implemented">0</td>
+                                    <td id="govern-not-applicable">0</td>
+                                    <td id="govern-tier">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Identify</td>
+                                    <td>21</td>
+                                    <td id="identify-implemented">0</td>
+                                    <td id="identify-not-implemented">0</td>
+                                    <td id="identify-not-applicable">0</td>
+                                    <td id="identify-tier">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Protect</td>
+                                    <td>22</td>
+                                    <td id="protect-implemented">0</td>
+                                    <td id="protect-not-implemented">0</td>
+                                    <td id="protect-not-applicable">0</td>
+                                    <td id="protect-tier">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Detect</td>
+                                    <td>11</td>
+                                    <td id="detect-implemented">0</td>
+                                    <td id="detect-not-implemented">0</td>
+                                    <td id="detect-not-applicable">0</td>
+                                    <td id="detect-tier">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Respond</td>
+                                    <td>13</td>
+                                    <td id="respond-implemented">0</td>
+                                    <td id="respond-not-implemented">0</td>
+                                    <td id="respond-not-applicable">0</td>
+                                    <td id="respond-tier">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Recover</td>
+                                    <td>8</td>
+                                    <td id="recover-implemented">0</td>
+                                    <td id="recover-not-implemented">0</td>
+                                    <td id="recover-not-applicable">0</td>
+                                    <td id="recover-tier">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="resources-section">
+                        <h3>Resources</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Website</label>
+                                <input type="text" id="website" placeholder="https://example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Documentation</label>
+                                <input type="text" id="documentation" placeholder="https://docs.example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Deployed Contracts</label>
+                                <input type="text" id="contracts" placeholder="Contract addresses">
+                            </div>
+                            <div class="form-group">
+                                <label>Github</label>
+                                <input type="text" id="github" placeholder="https://github.com/example">
+                            </div>
+                        </div>
+
+                        <h4>Socials</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Twitter</label>
+                                <input type="text" id="twitter" placeholder="@example">
+                            </div>
+                            <div class="form-group">
+                                <label>Discord</label>
+                                <input type="text" id="discord" placeholder="Discord invite link">
+                            </div>
+                            <div class="form-group">
+                                <label>Telegram</label>
+                                <input type="text" id="telegram" placeholder="Telegram link">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Govern Tab -->
+            <div id="govern" class="tab-content">
+                <div class="section">
+                    <h2>Function: Govern</h2>
+                    <p class="description">
+                        The organization's cybersecurity risk management strategy, expectations, and policy are established, communicated, and monitored. The GOVERN Function provides outcomes to inform what an organization may do to achieve and prioritize the outcomes of the other five Functions in the context of its mission and stakeholder expectations.
+                    </p>
+                    <div id="govern-controls" class="controls-container"></div>
+                </div>
+            </div>
+
+            <!-- Identify Tab -->
+            <div id="identify" class="tab-content">
+                <div class="section">
+                    <h2>Function: Identify</h2>
+                    <p class="description">
+                        The organization's current cybersecurity risks are understood. Understanding the organization's assets (e.g., data, hardware, software, systems, facilities, services, people), suppliers, and related cybersecurity risks enables an organization to prioritize its efforts consistent with its risk management strategy.
+                    </p>
+                    <div id="identify-controls" class="controls-container"></div>
+                </div>
+            </div>
+
+            <!-- Protect Tab -->
+            <div id="protect" class="tab-content">
+                <div class="section">
+                    <h2>Function: Protect</h2>
+                    <p class="description">
+                        Safeguards to manage the organization's cybersecurity risks are used. PROTECT supports the ability to secure those assets to prevent or lower the likelihood and impact of adverse cybersecurity events, as well as to increase the likelihood and impact of taking advantage of opportunities.
+                    </p>
+                    <div id="protect-controls" class="controls-container"></div>
+                </div>
+            </div>
+
+            <!-- Detect Tab -->
+            <div id="detect" class="tab-content">
+                <div class="section">
+                    <h2>Function: Detect</h2>
+                    <p class="description">
+                        Possible cybersecurity attacks and compromises are found and analyzed. DETECT enables the timely discovery and analysis of anomalies, indicators of compromise, and other potentially adverse events that may indicate that cybersecurity attacks and incidents are occurring.
+                    </p>
+                    <div id="detect-controls" class="controls-container"></div>
+                </div>
+            </div>
+
+            <!-- Respond Tab -->
+            <div id="respond" class="tab-content">
+                <div class="section">
+                    <h2>Function: Respond</h2>
+                    <p class="description">
+                        Actions regarding a detected cybersecurity incident are taken. RESPOND supports the ability to contain the effects of cybersecurity incidents. Outcomes within this Function cover incident management, analysis, mitigation, reporting, and communication.
+                    </p>
+                    <div id="respond-controls" class="controls-container"></div>
+                </div>
+            </div>
+
+            <!-- Recover Tab -->
+            <div id="recover" class="tab-content">
+                <div class="section">
+                    <h2>Function: Recover</h2>
+                    <p class="description">
+                        Assets and operations affected by a cybersecurity incident are restored. RECOVER supports the timely restoration of normal operations to reduce the effects of cybersecurity incidents and enable appropriate communication during recovery efforts.
+                    </p>
+                    <div id="recover-controls" class="controls-container"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Need Professional Assessment?</h2>
+                <p>Get a comprehensive risk assessment conducted by Creed's security experts. Our team provides detailed analysis, peer review, and actionable recommendations for your Web3 project.</p>
+                <div class="cta-features">
+                    <div class="feature">
+                        <h4>Expert Analysis</h4>
+                        <p>Detailed 1-hour interviews with security professionals</p>
+                    </div>
+                    <div class="feature">
+                        <h4>Peer Review</h4>
+                        <p>Double-checked assessments for accuracy and completeness</p>
+                    </div>
+                    <div class="feature">
+                        <h4>Actionable Report</h4>
+                        <p>Comprehensive report with improvement recommendations</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-large" onclick="window.open('https://example.typeform.com/to/assessment', '_blank')">
+                    Book Professional Assessment
+                </button>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2024 Creed Collective. Risk Assessment Framework - Open Source</p>
+        </footer>
+    </div>
+
+    <input type="file" id="fileInput" accept=".json" style="display: none;">
+    <script src="script.js"></script>
+</body>
+</html>
