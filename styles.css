@@ -68,6 +68,8 @@ body {
 
 .methodology-partner {
     flex-shrink: 0;
+    display: flex;
+    justify-content: center;
 }
 
 .turtle-link {
@@ -89,6 +91,21 @@ body {
 
 .turtle-logo-large:hover {
     opacity: 1;
+}
+
+/* Bottom sections grid layout */
+.bottom-sections-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+    align-items: flex-start;
+}
+
+.partners-section-right h4 {
+    color: #eee9e1;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
 }
 
 /* Function-specific pastel colors */
@@ -1353,6 +1370,12 @@ body {
 
     .turtle-logo-large {
         height: 120px; /* Smaller on mobile but still 2x original */
+    }
+
+    /* Responsive grid layout */
+    .bottom-sections-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 }
 
