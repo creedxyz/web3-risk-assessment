@@ -125,11 +125,12 @@ let assessmentData = {
     metadata: {
         website: '',
         documentation: '',
-        contracts: '',
+        contracts: [''], // Changed to array for dynamic fields
         github: '',
         twitter: '',
         discord: '',
-        telegram: ''
+        telegram: '',
+        dynamicSocials: [] // New array for additional social fields
     },
     controls: {}
 };
@@ -205,7 +206,7 @@ function createControlElement(functionName, control) {
         <div class="control-main">
             <div class="control-left">
                 <div class="control-header">
-                    <div class="control-id">${control.id}</div>
+                    <div class="control-id ${functionName}">${control.id}</div>
                     <div class="control-status">
                         <select id="${control.id}-status" data-function="${functionName}" data-control="${control.id}">
                             <option value="">Select Status</option>
@@ -328,6 +329,26 @@ function updateSummaryTable() {
 // Local storage functions
 function saveToLocalStorage() {
     try {
+        // Collect dynamic contract fields
+        const contractInputs = document.querySelectorAll('#contracts-container input[type="text"]');
+        assessmentData.metadata.contracts = Array.from(contractInputs).map(input => input.value).filter(value => value.trim() !== '');
+
+        // Collect dynamic social fields
+        const dynamicSocials = [];
+        const dynamicSocialFields = document.querySelectorAll('.dynamic-social-field');
+        dynamicSocialFields.forEach(field => {
+            const nameInput = field.querySelector('.social-name-input');
+            const urlInput = field.querySelector('.social-url-input');
+            if (nameInput && urlInput && nameInput.value.trim() !== '' && urlInput.value.trim() !== '') {
+                dynamicSocials.push({
+                    name: nameInput.value,
+                    url: urlInput.value
+                });
+            }
+        });
+        assessmentData.metadata.dynamicSocials = dynamicSocials;
+
+        // Save to localStorage
         localStorage.setItem('creed-assessment-data', JSON.stringify(assessmentData));
     } catch (error) {
         console.error('Error saving to localStorage:', error);
@@ -353,13 +374,63 @@ function loadFromLocalStorage() {
 }
 
 function updateFormFields() {
-    // Update metadata fields
-    Object.keys(assessmentData.metadata).forEach(field => {
+    // Update simple metadata fields
+    ['website', 'documentation', 'github', 'twitter', 'discord', 'telegram'].forEach(field => {
         const element = document.getElementById(field);
-        if (element) {
-            element.value = assessmentData.metadata[field] || '';
+        if (element && assessmentData.metadata[field]) {
+            element.value = assessmentData.metadata[field];
         }
     });
+
+    // Restore dynamic contract fields
+    const contractsContainer = document.getElementById('contracts-container');
+    if (contractsContainer && assessmentData.metadata.contracts) {
+        // Clear existing dynamic fields (keep first one)
+        const dynamicFields = contractsContainer.querySelectorAll('.dynamic-field-group');
+        dynamicFields.forEach(field => field.remove());
+
+        // Set first contract field
+        const firstContract = document.getElementById('contracts');
+        if (firstContract && assessmentData.metadata.contracts[0]) {
+            firstContract.value = assessmentData.metadata.contracts[0];
+        }
+
+        // Add additional contract fields
+        for (let i = 1; i < assessmentData.metadata.contracts.length; i++) {
+            contractFieldCounter++;
+            const fieldGroup = document.createElement('div');
+            fieldGroup.className = 'dynamic-field-group';
+            fieldGroup.innerHTML = `
+                <input type="text" id="contracts-${contractFieldCounter}" placeholder="Contract address" value="${assessmentData.metadata.contracts[i]}">
+                <button type="button" class="remove-field-btn" onclick="removeContractField(this)">×</button>
+            `;
+            contractsContainer.appendChild(fieldGroup);
+        }
+    }
+
+    // Restore dynamic social fields
+    const socialsContainer = document.getElementById('socials-container');
+    if (socialsContainer && assessmentData.metadata.dynamicSocials) {
+        // Remove existing dynamic social fields
+        const dynamicSocialFields = socialsContainer.querySelectorAll('.dynamic-social-field');
+        dynamicSocialFields.forEach(field => field.remove());
+
+        // Add dynamic social fields
+        assessmentData.metadata.dynamicSocials.forEach(social => {
+            socialFieldCounter++;
+            const fieldGroup = document.createElement('div');
+            fieldGroup.className = 'form-group dynamic-social-field';
+            fieldGroup.innerHTML = `
+                <label>Social Media</label>
+                <div class="social-input-row">
+                    <input type="text" id="social-name-${socialFieldCounter}" placeholder="Social media name" class="social-name-input" value="${social.name}">
+                    <input type="text" id="social-url-${socialFieldCounter}" placeholder="Link or handle" class="social-url-input" value="${social.url}">
+                    <button type="button" class="remove-field-btn" onclick="removeSocialField(this)">×</button>
+                </div>
+            `;
+            socialsContainer.appendChild(fieldGroup);
+        });
+    }
 
     // Update control fields
     Object.keys(assessmentData.controls).forEach(functionName => {
@@ -930,3 +1001,61 @@ document.addEventListener('input', function(e) {
         debouncedSave();
     }
 });
+
+// Dynamic field management
+let contractFieldCounter = 1;
+let socialFieldCounter = 1;
+
+function addContractField() {
+    contractFieldCounter++;
+    const container = document.getElementById('contracts-container');
+
+    const fieldGroup = document.createElement('div');
+    fieldGroup.className = 'dynamic-field-group';
+    fieldGroup.innerHTML = `
+        <input type="text" id="contracts-${contractFieldCounter}" placeholder="Contract address">
+        <button type="button" class="remove-field-btn" onclick="removeContractField(this)">×</button>
+    `;
+
+    container.appendChild(fieldGroup);
+
+    // Trigger save
+    debouncedSave();
+}
+
+function removeContractField(button) {
+    const fieldGroup = button.parentElement;
+    fieldGroup.remove();
+
+    // Trigger save
+    debouncedSave();
+}
+
+function addSocialField() {
+    socialFieldCounter++;
+    const container = document.getElementById('socials-container');
+
+    const fieldGroup = document.createElement('div');
+    fieldGroup.className = 'form-group dynamic-social-field';
+    fieldGroup.innerHTML = `
+        <label>Social Media</label>
+        <div class="social-input-row">
+            <input type="text" id="social-name-${socialFieldCounter}" placeholder="Social media name" class="social-name-input">
+            <input type="text" id="social-url-${socialFieldCounter}" placeholder="Link or handle" class="social-url-input">
+            <button type="button" class="remove-field-btn" onclick="removeSocialField(this)">×</button>
+        </div>
+    `;
+
+    container.appendChild(fieldGroup);
+
+    // Trigger save
+    debouncedSave();
+}
+
+function removeSocialField(button) {
+    const fieldGroup = button.closest('.dynamic-social-field');
+    fieldGroup.remove();
+
+    // Trigger save
+    debouncedSave();
+}
