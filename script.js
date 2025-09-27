@@ -503,9 +503,9 @@ function exportToPDF() {
 
     // Creed color scheme (converted to RGB for PDF) - optimized for readability
     const colors = {
-        primary: [0, 255, 136],      // #00ff88 - Creed green
-        primaryDark: [0, 204, 106],  // #00cc6a - Darker green for better contrast
-        dark: [26, 26, 26],          // #1a1a1a - Dark background (lighter than before)
+        primary: [89, 181, 131],      // #59b583 - Creed green
+        primaryDark: [70, 150, 110],  // Darker green for better contrast
+        dark: [25, 25, 25],          // #191919 - Dark background
         darkTable: [35, 35, 35],     // #232323 - Table background
         gray: [102, 102, 102],       // #666666 - Gray text
         lightGray: [170, 170, 170],  // #aaaaaa - Light gray
@@ -586,7 +586,7 @@ function exportToPDF() {
         // Footer text
         doc.setFontSize(8);
         setTextColor(colors.gray);
-        doc.text('© 2024 Creed Collective • thecreed.xyz', margin, footerY);
+        doc.text('© 2025 Creed Collective • thecreed.xyz', margin, footerY);
 
         // Page number
         const pageNum = doc.internal.getCurrentPageInfo().pageNumber;
@@ -601,15 +601,17 @@ function exportToPDF() {
     doc.setFontSize(20);
     doc.setFont('helvetica', 'bold');
     setTextColor(colors.black);
-    doc.text('Cybersecurity Risk Assessment Report', margin, yPosition);
+    doc.text('Comprehensive Web3 Risk Assessments Report', margin, yPosition);
     yPosition += 15;
 
     // Subtitle with assessment date
     doc.setFontSize(12);
     doc.setFont('helvetica', 'normal');
     setTextColor(colors.gray);
-    doc.text(`Based on NIST Cybersecurity Framework v2.0`, margin, yPosition);
-    yPosition += 20;
+    yPosition = addWrappedText('Cybersecurity posture & Operations Risk Assessment', margin, yPosition, maxLineWidth, 12);
+    yPosition += 5;
+    yPosition = addWrappedText('Creed performs detailed risk assessments for DeFi protocols, NFT platforms, DAOs, and the entire Web3 ecosystem using a newly standardized methodology based on the NIST Capability Maturity Model (CMM), Cybersecurity Framework v2.0 (CSF), and Secure Controls Framework (SCF).', margin, yPosition, maxLineWidth, 10);
+    yPosition += 10;
 
     // Executive Summary Section
     yPosition = checkPageBreak(yPosition, 60);
@@ -725,10 +727,10 @@ function exportToPDF() {
     doc.text('Project Resources', margin + 5, yPosition + 5);
     yPosition += 20;
 
-    const resources = [
+    // Basic resources
+    const basicResources = [
         ['Website', assessmentData.metadata.website],
         ['Documentation', assessmentData.metadata.documentation],
-        ['Smart Contracts', assessmentData.metadata.contracts],
         ['GitHub Repository', assessmentData.metadata.github],
         ['Twitter', assessmentData.metadata.twitter],
         ['Discord', assessmentData.metadata.discord],
@@ -738,7 +740,8 @@ function exportToPDF() {
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
 
-    resources.forEach(([label, value]) => {
+    // Add basic resources
+    basicResources.forEach(([label, value]) => {
         if (value && value.trim()) {
             yPosition = checkPageBreak(yPosition, 8);
 
@@ -750,6 +753,90 @@ function exportToPDF() {
             yPosition += 8;
         }
     });
+
+    // Add dynamic contracts
+    if (assessmentData.metadata.contracts && assessmentData.metadata.contracts.length > 0) {
+        assessmentData.metadata.contracts.forEach((contract, index) => {
+            if (contract && contract.trim()) {
+                yPosition = checkPageBreak(yPosition, 8);
+
+                setTextColor(colors.primaryDark);
+                const label = index === 0 ? 'Smart Contract:' : `Smart Contract ${index + 1}:`;
+                doc.text(label, margin, yPosition);
+
+                setTextColor(colors.black);
+                doc.text(contract, margin + 40, yPosition);
+                yPosition += 8;
+            }
+        });
+    }
+
+    // Add dynamic socials
+    if (assessmentData.metadata.dynamicSocials && assessmentData.metadata.dynamicSocials.length > 0) {
+        assessmentData.metadata.dynamicSocials.forEach((social) => {
+            if (social.name && social.url && social.name.trim() && social.url.trim()) {
+                yPosition = checkPageBreak(yPosition, 8);
+
+                setTextColor(colors.primaryDark);
+                doc.text(`${social.name}:`, margin, yPosition);
+
+                setTextColor(colors.black);
+                doc.text(social.url, margin + 40, yPosition);
+                yPosition += 8;
+            }
+        });
+    }
+
+    // Risk Assessment Process Section
+    yPosition = checkPageBreak(yPosition, 60);
+    yPosition += 15;
+
+    setFillColor(colors.accent);
+    doc.rect(margin, yPosition - 5, maxLineWidth, 12, 'F');
+
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    setTextColor(colors.primary);
+    doc.text('Risk Assessment Process', margin + 5, yPosition + 5);
+    yPosition += 20;
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    setTextColor(colors.black);
+    const processText = 'To ensure a thorough and accurate risk assessment, we follow a structured and transparent approach:';
+    yPosition = addWrappedText(processText, margin, yPosition, maxLineWidth, 10);
+    yPosition += 10;
+
+    const processSteps = [
+        'Pre-Interview Questionnaire: We begin by sending the client a questionnaire designed to gather basic information. This helps us understand the client\'s initial risk profile and identify areas that require deeper exploration.',
+        'One-Hour Interview: After reviewing the questionnaire, we conduct a one-hour interview with the client. This interview follows a set of guidelines and includes specific questions tailored to the client\'s unique circumstances. The goal is to gather detailed insights and clarify any ambiguities from the questionnaire.',
+        'Recording and Documentation: The interview is recorded, and our team takes detailed notes throughout the session. These materials are used to complete the assessment, ensuring that all relevant information is captured and thoroughly evaluated.',
+        'Report Compilation: Using the insights from both the questionnaire and the interview, we compile a comprehensive risk assessment report. This report reflects a complete analysis based on the data provided by the client and our evaluation.',
+        'Peer Review: Once the report is drafted, it undergoes a peer review process. Another member of our team reviews the report to ensure accuracy, consistency, and that no critical aspects are overlooked. This step ensures that the risk assessment is objective and reliable.'
+    ];
+
+    processSteps.forEach((step, index) => {
+        yPosition = checkPageBreak(yPosition, 20);
+
+        // Step number
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        setTextColor(colors.primaryDark);
+        doc.text(`${index + 1}.`, margin, yPosition);
+
+        // Step text
+        doc.setFont('helvetica', 'normal');
+        setTextColor(colors.black);
+        yPosition = addWrappedText(step, margin + 15, yPosition, maxLineWidth - 15, 10);
+        yPosition += 8;
+    });
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    setTextColor(colors.black);
+    const closingText = 'By following this process, we aim to provide a clear, comprehensive, and accurate risk analysis that our clients can rely on for decision-making.';
+    yPosition = addWrappedText(closingText, margin, yPosition + 5, maxLineWidth, 10);
+    yPosition += 15;
 
     // Control Details for each function
     functionNames.forEach((funcName, funcIndex) => {
@@ -771,12 +858,12 @@ function exportToPDF() {
         doc.setFont('helvetica', 'italic');
         setTextColor(colors.gray);
         const descriptions = {
-            govern: 'Establish cybersecurity risk management strategy, expectations, and policy.',
-            identify: 'Understand organizational assets, suppliers, and related cybersecurity risks.',
-            protect: 'Implement safeguards to manage cybersecurity risks.',
-            detect: 'Identify cybersecurity attacks and compromises in a timely manner.',
-            respond: 'Take action regarding detected cybersecurity incidents.',
-            recover: 'Restore assets and operations affected by cybersecurity incidents.'
+            govern: 'The organization’s cybersecurity risk management strategy, expectations, and policy are established, communicated, and monitored. The GOVERN Function provides outcomes to inform what an organization may do to achieve and prioritize the outcomes of the other five Functions in the context of its mission and stakeholder expectations. Governance activities are critical for incorporating cybersecurity into an organization’s broader enterprise risk management (ERM) strategy. GOVERN addresses an understanding of organizational context; the establishment of cybersecurity strategy and cybersecurity supply chain risk management; roles, responsibilities, and authorities; policy; and the oversight of cybersecurity strategy.',
+            identify: 'The organization’s current cybersecurity risks are understood. Understanding the organization’s assets (e.g., data, hardware, software, systems, facilities, services, people), suppliers, and related cybersecurity risks enables an organization to prioritize its efforts consistent with its risk management strategy and the mission needs identified under GOVERN. This Function also includes the identification of improvement opportunities for the organization’s policies, plans, processes, procedures, and practices that support cybersecurity risk management to inform efforts under all six Functions.',
+            protect: 'Safeguards to manage the organization’s cybersecurity risks are used. Once assets and risks are identified and prioritized, PROTECT supports the ability to secure those assets to prevent or lower the likelihood and impact of adverse cybersecurity events, as well as to increase the likelihood and impact of taking advantage of opportunities. Outcomes covered by this Function include identity management, authentication, and access control; awareness and training; data security; platform security (i.e., securing the hardware, software, and services of physical and virtual platforms); and the resilience of technology infrastructure.',
+            detect: 'Possible cybersecurity attacks and compromises are found and analyzed. DETECT enables the timely discovery and analysis of anomalies, indicators of compromise, and other potentially adverse events that may indicate that cybersecurity attacks and incidents are occurring. This Function supports successful incident response and recovery activities.',
+            respond: 'Actions regarding a detected cybersecurity incident are taken. RESPOND supports the ability to contain the effects of cybersecurity incidents. Outcomes within this Function cover incident management, analysis, mitigation, reporting, and communication.',
+            recover: 'Assets and operations affected by a cybersecurity incident are restored. RECOVER supports the timely restoration of normal operations to reduce the effects of cybersecurity incidents and enable appropriate communication during recovery efforts. While many cybersecurity risk management activities focus on preventing negative events from occurring, they may also support taking advantage of positive opportunities. Actions to reduce cybersecurity risk might benefit an organization in other ways, like increasing revenue (e.g., first offering excess facility space to a commercial hosting provider for hosting their own and other organizations’ data centers, then moving a major financial system from the organization’s in-house data center to the hosting provider to reduce cybersecurity risks).'
         };
 
         yPosition = addWrappedText(descriptions[funcName], margin, yPosition, maxLineWidth, 9);
@@ -882,6 +969,187 @@ function exportToPDF() {
         });
 
         yPosition += 10;
+    });
+
+    // Disclaimer Section
+    yPosition = checkPageBreak(yPosition, 60);
+    yPosition += 15;
+
+    setFillColor(colors.accent);
+    doc.rect(margin, yPosition - 5, maxLineWidth, 12, 'F');
+
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    setTextColor(colors.primary);
+    doc.text('Disclaimer', margin + 5, yPosition + 5);
+    yPosition += 20;
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    setTextColor(colors.black);
+    const disclaimerText = 'This Risk Assessment Report ("Report") has been prepared by the Creed collective ("Creed") for the exclusive use of the client identified herein. Its findings and recommendations are subject to the following limitations and conditions:';
+    yPosition = addWrappedText(disclaimerText, margin, yPosition, maxLineWidth, 10);
+    yPosition += 15;
+
+    const disclaimerPoints = [
+        'Methodology & Continuous Improvement — Creed\'s assessment methodology is a proprietary and evolving product. It benchmarks the evidence collected against two widely recognised industry references—the Capability Maturity Model (CMM) and the Secure Controls Framework (SCF). As our tooling and mapping logic mature, future assessments may apply updated criteria, weightings, or scoring thresholds.',
+        'Information Source & Accuracy — All conclusions rely on information supplied by project representatives during the pre-assessment questionnaire, a one-hour interview, and any publicly available material they directed us to. Creed has accepted these inputs as accurate and complete; no independent code review, penetration test, or on-chain analysis was executed.',
+        'Assessment Depth & Scope — The Report provides a high-level, capability-maturity view of the organisation\'s stated controls. It is not a comprehensive security audit and does not constitute legal, financial, or regulatory advice, nor a guarantee that undisclosed vulnerabilities, misconfigurations, or policy gaps are absent.',
+        'Point-in-Time Nature — Findings reflect the organisation\'s posture as of the interview date. Because threat landscapes and internal practices evolve, Creed has no obligation to update this Report after delivery.',
+        'Use & Reliance — This document should be read in full and used only for risk-management decisions within the original engagement scope. Creed disclaims all liability for any other use or for decisions made without considering the limitations above.'
+    ];
+
+    disclaimerPoints.forEach((point, index) => {
+        yPosition = checkPageBreak(yPosition, 25);
+
+        // Point number
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        setTextColor(colors.primaryDark);
+        doc.text(`${index + 1}.`, margin, yPosition);
+
+        // Point text
+        doc.setFont('helvetica', 'normal');
+        setTextColor(colors.black);
+        yPosition = addWrappedText(point, margin + 15, yPosition, maxLineWidth - 15, 10);
+        yPosition += 12;
+    });
+
+    const disclaimerClosing = 'By reviewing this Report, the client acknowledges and accepts these limitations.';
+    yPosition = addWrappedText(disclaimerClosing, margin, yPosition + 5, maxLineWidth, 10);
+    yPosition += 20;
+
+    // Appendix A: Risk Maturity Tiers
+    yPosition = checkPageBreak(yPosition, 60);
+
+    setFillColor(colors.accent);
+    doc.rect(margin, yPosition - 5, maxLineWidth, 12, 'F');
+
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    setTextColor(colors.primary);
+    doc.text('Appendix A: Risk Maturity Tiers', margin + 5, yPosition + 5);
+    yPosition += 20;
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    setTextColor(colors.black);
+    const tiersIntro = 'These tiers draw upon the high-level structure of the Capability Maturity Model (CMM) and Secure Controls Framework (SCF). The Tiers characterize the rigor of an organization\'s cybersecurity risk governance practices (GOVERN) and cybersecurity risk management practices (IDENTIFY, PROTECT, DETECT, RESPOND, and RECOVER).';
+    yPosition = addWrappedText(tiersIntro, margin, yPosition, maxLineWidth, 10);
+    yPosition += 15;
+
+    // Tier definitions
+    const tiers = [
+        { name: 'Tier 0: Non-existent', governance: 'not defined', management: 'not performed' },
+        { name: 'Tier 1: Initial', governance: 'Performed Informally. The application of the organizational risk strategy is managed in an ad hoc manner. Prioritization is ad hoc and not formally based on objectives or threat environment.', management: 'Performed Informally. There is limited awareness of cybersecurity risks at the organizational level. The organization implements risk management on an irregular, case-by-case basis. The organization may not have processes that enable cybersecurity information to be shared within the organization. The organization is generally unaware of the cybersecurity risks associated with its suppliers and the products and services it acquires and uses.' },
+        { name: 'Tier 2: Repeatable', governance: 'Planned & tracked. Risk management practices are approved by management but may not be established as an organization-wide policy. The prioritization of cybersecurity activities and protection needs is directly informed by organizational risk objectives, the threat environment, or business/mission requirements.', management: 'Requirements-Driven Practices. There is an awareness of cybersecurity risks at the organizational level, but an organization-wide approach to managing cybersecurity risks has not been established. Cybersecurity information is shared within the organization on an informal basis. The organization is aware of the cybersecurity risks associated with its suppliers and the products and services it acquires and uses, but it does not act consistently or formally in response to those risks.' },
+        { name: 'Tier 3: Defined', governance: 'Well-defined. Risk management policies and processes are documented, standardized, and integrated across the organization. The organization has developed a formal governance structure that oversees cybersecurity risk management, ensuring alignment with business and mission objectives. Cybersecurity risk governance is explicitly included in enterprise-wide decision-making processes.', management: 'Enterprise-Wide Standardization. An organization-wide approach to managing cybersecurity risks is established and consistently applied. Cybersecurity roles and responsibilities are clearly defined, and personnel are trained to understand their security responsibilities. The organization has established formal mechanisms for sharing cybersecurity information both internally and externally with stakeholders. The organization formally assesses risks associated with its suppliers and enforces security requirements through contractual agreements and monitoring mechanisms.' },
+        { name: 'Tier 4: Capable', governance: 'Quantitatively Controlled. The organization\'s risk management practices are formally approved and expressed as policy. Risk-informed policies, processes, and procedures are defined, implemented as intended, and reviewed. Organizational cybersecurity practices are regularly updated based on the application of risk management processes to changes in business/mission requirements, threats, and technological landscape.', management: 'Metrics-Driven Governance. There is an organization-wide approach to managing cybersecurity risks. Cybersecurity information is routinely shared throughout the organization. Consistent methods are in place to respond effectively to changes in risk. Personnel possess the knowledge and skills to perform their appointed roles and responsibilities. The organization consistently and accurately monitors the risks of assets. Senior cybersecurity and non-cybersecurity executives communicate regularly regarding cybersecurity risks. Executives ensure that security is considered through all lines of operation in the organization. The organization\'s risk strategy is informed by the cybersecurity risks associated with its suppliers and the products and services it acquires and uses. Personnel formally act upon those risks through mechanisms such as written agreements to communicate baseline requirements, governance structures (e.g., risk councils), and policy implementation and monitoring. These actions are implemented consistently and as intended and are continuously monitored and reviewed.' },
+        { name: 'Tier 5: Efficient', governance: 'Continuously Improving. There is an organization-wide approach to managing cybersecurity risks that uses risk-informed policies, processes, and procedures to address potential cybersecurity events. The relationship between cybersecurity risks and organizational objectives is clearly understood and considered when making decisions. Executives monitor cybersecurity risks in the same context as financial and other organizational risks. The organizational budget is based on an understanding of the current and predicted risk environment and risk tolerance. Business units implement the executive vision and analyze system-level risks in the context of organizational risk tolerances.', management: 'World-Class Practices. Risk management is part of the organizational culture. It evolves from an awareness of previous activities and continuous awareness of activities on organizational systems and networks. The organization can quickly and efficiently account for changes to business/mission objectives in how risk is approached and communicated. The organization adapts its cybersecurity practices based on previous and current cybersecurity activities, including lessons learned and predictive indicators. Through a process of continuous improvement that incorporates advanced cybersecurity technologies and practices, the organization actively adapts to a changing technological landscape and responds in a timely and effective manner to evolving sophisticated threats. The organization uses real-time or near real-time information to understand and consistently act upon the cybersecurity risks associated with its suppliers and the products and services it acquires and uses. Cybersecurity information is constantly shared throughout the organization and with authorized third parties.' }
+    ];
+
+    tiers.forEach((tier) => {
+        yPosition = checkPageBreak(yPosition, 30);
+
+        // Tier name
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'bold');
+        setTextColor(colors.primaryDark);
+        yPosition = addWrappedText(tier.name, margin, yPosition, maxLineWidth, 11);
+        yPosition += 8;
+
+        // Risk Governance
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        setTextColor(colors.black);
+        doc.text('Risk Governance:', margin + 10, yPosition);
+        yPosition += 6;
+
+        doc.setFont('helvetica', 'normal');
+        yPosition = addWrappedText(tier.governance, margin + 15, yPosition, maxLineWidth - 15, 9);
+        yPosition += 8;
+
+        // Risk Management
+        doc.setFont('helvetica', 'bold');
+        doc.text('Risk Management:', margin + 10, yPosition);
+        yPosition += 6;
+
+        doc.setFont('helvetica', 'normal');
+        yPosition = addWrappedText(tier.management, margin + 15, yPosition, maxLineWidth - 15, 9);
+        yPosition += 12;
+    });
+
+    // Appendix B: Identifier Glossary
+    yPosition = checkPageBreak(yPosition, 60);
+
+    setFillColor(colors.accent);
+    doc.rect(margin, yPosition - 5, maxLineWidth, 12, 'F');
+
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    setTextColor(colors.primary);
+    doc.text('Appendix B: Identifier Glossary', margin + 5, yPosition + 5);
+    yPosition += 20;
+
+    const glossaryEntries = [
+        { category: 'Govern (GV)', items: [
+            { code: 'GV.OC', name: 'Organizational Context' },
+            { code: 'GV.RM', name: 'Risk Management Strategy' },
+            { code: 'GV.RR', name: 'Roles, Responsibilities, And Authorities' },
+            { code: 'GV.PO', name: 'Policy' },
+            { code: 'GV.OV', name: 'Oversight' },
+            { code: 'GV.SC', name: 'Cybersecurity Supply Chain Risk Management' }
+        ]},
+        { category: 'Identify (ID)', items: [
+            { code: 'ID.AM', name: 'Asset Management' },
+            { code: 'ID.RA', name: 'Risk Assessment' },
+            { code: 'ID.IM', name: 'Improvement' }
+        ]},
+        { category: 'Protect (PR)', items: [
+            { code: 'PR.AA', name: 'Identity Management, Authentication, And Access Control' },
+            { code: 'PR.AT', name: 'Awareness And Training' },
+            { code: 'PR.DS', name: 'Data Security' },
+            { code: 'PR.PS', name: 'Platform Security' },
+            { code: 'PR.IR', name: 'Technology Infrastructure Resilience' }
+        ]},
+        { category: 'Detect (DE)', items: [
+            { code: 'DE.CM', name: 'Continuous Monitoring' },
+            { code: 'DE.AE', name: 'Adverse Event Analysis' }
+        ]},
+        { category: 'Respond (RS)', items: [
+            { code: 'RS.MA', name: 'Incident Management' },
+            { code: 'RS.AN', name: 'Incident Analysis' },
+            { code: 'RS.CO', name: 'Incident Response Reporting And Communication' },
+            { code: 'RS.MI', name: 'Incident Mitigation' }
+        ]},
+        { category: 'Recover (RC)', items: [
+            { code: 'RC.RP', name: 'Incident Recovery Plan Execution' },
+            { code: 'RC.CO', name: 'Incident Recovery Communication' }
+        ]}
+    ];
+
+    glossaryEntries.forEach((entry) => {
+        yPosition = checkPageBreak(yPosition, entry.items.length * 6 + 10);
+
+        // Category header
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'bold');
+        setTextColor(colors.primaryDark);
+        doc.text(entry.category, margin, yPosition);
+        yPosition += 10;
+
+        // Category items
+        entry.items.forEach((item) => {
+            doc.setFontSize(9);
+            doc.setFont('helvetica', 'normal');
+            setTextColor(colors.black);
+
+            doc.text(item.code, margin + 10, yPosition);
+            doc.text(item.name, margin + 35, yPosition);
+            yPosition += 6;
+        });
+
+        yPosition += 5; // Extra space between categories
     });
 
     // Add footer to last page
