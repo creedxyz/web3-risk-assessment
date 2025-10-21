@@ -65,7 +65,7 @@ An interactive web application for conducting cybersecurity risk assessments usi
 
 While this tool provides a comprehensive self-assessment framework, for critical systems and professional validation, consider booking a professional assessment with the Creed team:
 
-**[Book Professional Assessment →](https://example.typeform.com/to/assessment)**
+**[Book Professional Assessment →](https://form.typeform.com/to/nlWHgMTF)**
 
 Professional services include:
 - Expert security analysis
@@ -127,7 +127,7 @@ This is an open-source framework designed to standardize web3 cybersecurity risk
 
 ## License
 
-MIT License - See LICENSE file for details
+MIT License 
 
 ---
 
