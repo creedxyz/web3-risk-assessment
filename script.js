@@ -147,8 +147,10 @@ Object.keys(controlsData).forEach(functionName => {
 });
 
 // DOM Elements
+const primaryTabButtons = document.querySelectorAll('.primary-tab-button');
 const tabButtons = document.querySelectorAll('.tab-button');
 const tabContents = document.querySelectorAll('.tab-content');
+const secondaryNav = document.getElementById('assessment-tabs');
 const importBtn = document.getElementById('importBtn');
 const exportBtn = document.getElementById('exportBtn');
 const exportPdfBtn = document.getElementById('exportPdfBtn');
@@ -166,22 +168,61 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Tab functionality
 function initializeTabs() {
+    // Primary tab switching (About / Self-Assessment)
+    primaryTabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetPrimary = this.getAttribute('data-primary');
+            switchPrimaryTab(targetPrimary);
+        });
+    });
+
+    // Secondary tab switching (Executive Summary and functions)
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
             const targetTab = this.getAttribute('data-tab');
             switchTab(targetTab);
         });
     });
+
+    // Set initial state: Self-Assessment active, show secondary nav and Executive Summary
+    switchPrimaryTab('assessment');
+    switchTab('summary');
+}
+
+function switchPrimaryTab(targetPrimary) {
+    // Update primary tab buttons
+    primaryTabButtons.forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`[data-primary="${targetPrimary}"]`).classList.add('active');
+
+    if (targetPrimary === 'about') {
+        // Show About tab, hide secondary navigation
+        secondaryNav.classList.add('hidden');
+        tabContents.forEach(content => content.classList.remove('active'));
+        document.getElementById('about').classList.add('active');
+    } else if (targetPrimary === 'assessment') {
+        // Show secondary navigation and default to currently active tab
+        secondaryNav.classList.remove('hidden');
+        // Find active secondary tab or default to summary
+        const activeSecondaryTab = document.querySelector('.tab-button.active');
+        const targetTab = activeSecondaryTab ? activeSecondaryTab.getAttribute('data-tab') : 'summary';
+        switchTab(targetTab);
+    }
 }
 
 function switchTab(targetTab) {
-    // Update tab buttons
+    // Update secondary tab buttons
     tabButtons.forEach(btn => btn.classList.remove('active'));
-    document.querySelector(`[data-tab="${targetTab}"]`).classList.add('active');
+    const targetButton = document.querySelector(`[data-tab="${targetTab}"]`);
+    if (targetButton) {
+        targetButton.classList.add('active');
+    }
 
     // Update tab content
     tabContents.forEach(content => content.classList.remove('active'));
-    document.getElementById(targetTab).classList.add('active');
+    const targetContent = document.getElementById(targetTab);
+    if (targetContent) {
+        targetContent.classList.add('active');
+    }
 }
 
 // Initialize controls for each function

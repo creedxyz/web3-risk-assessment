@@ -60,8 +60,15 @@
         </header>
 
         <nav class="tab-navigation">
-            <div class="tab-buttons-left">
-                <button class="tab-button" data-tab="summary">Executive Summary</button>
+            <div class="primary-tabs">
+                <button class="primary-tab-button" data-primary="about">About</button>
+                <button class="primary-tab-button active" data-primary="assessment">Self-Assessment</button>
+            </div>
+        </nav>
+
+        <nav class="secondary-navigation" id="assessment-tabs">
+            <div class="secondary-tabs">
+                <button class="tab-button active" data-tab="summary">Executive Summary</button>
                 <button class="tab-button" data-tab="govern">Govern</button>
                 <button class="tab-button" data-tab="identify">Identify</button>
                 <button class="tab-button" data-tab="protect">Protect</button>
@@ -69,7 +76,6 @@
                 <button class="tab-button" data-tab="respond">Respond</button>
                 <button class="tab-button" data-tab="recover">Recover</button>
             </div>
-            <button class="tab-button about-tab active" data-tab="about">About</button>
         </nav>
 
         <main class="main-content">
@@ -259,7 +265,7 @@
             </div>
 
             <!-- About Tab -->
-            <div id="about" class="tab-content active">
+            <div id="about" class="tab-content">
                 <div class="section">
                     <h2>About This Risk Assessment Framework</h2>
 
@@ -278,12 +284,27 @@
                                 Our assessments evaluate projects across six critical functions: <span class="highlight">Govern</span>, <span class="highlight">Identify</span>, <span class="highlight">Protect</span>, <span class="highlight">Detect</span>, <span class="highlight">Respond</span>, and <span class="highlight">Recover</span> - providing a comprehensive view of an organization's cybersecurity posture and maturity.
                             </p>
 
+                            <div class="about-creed-hero">
+                                <h3>About Creed</h3>
+                                <p class="description">
+                                    Creed is a grassroots collective of security professionals dedicated to democratizing Web3 security. We combine deep technical expertise with standardized methodologies to provide comprehensive cybersecurity assessments for the decentralized ecosystem.
+                                </p>
+                            </div>
+
+                            <div class="open-source-note">
+                                <h4>Open Source Framework</h4>
+                                <p>This assessment framework is open source, designed to democratize cybersecurity risk assessment while supporting the professional services offered by the Creed collective.</p>
+                            </div>
+
                             <div class="bottom-sections-grid">
                                 <div class="links-section">
                                     <h4>Learn More & View Past Assessments</h4>
                                     <div class="external-links">
                                         <a href="https://thecreed.xyz/riskassessments" target="_blank" class="external-link">
                                             View Published Risk Assessments
+                                        </a>
+                                        <a href="https://thecreed.xyz" target="_blank" class="external-link">
+                                            Visit Creed Website
                                         </a>
                                     </div>
                                 </div>
@@ -409,31 +430,6 @@
                                     <h4>Tier 5: Efficient</h4>
                                     <p>Continuously improving, world-class practices with organization-wide risk culture integration.</p>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="about-section">
-                            <h3>About Creed</h3>
-                            <p class="description">
-                                Creed is a grassroots collective of security professionals dedicated to democratizing Web3 security. We combine deep technical expertise with standardized methodologies to provide comprehensive cybersecurity assessments for the decentralized ecosystem.
-                            </p>
-
-                            <div class="links-section">
-                                <h4>Learn More & View Past Assessments</h4>
-                                <div class="external-links">
-                                    <a href="https://thecreed.xyz/riskassessments" target="_blank" class="external-link">
-                                        View Published Risk Assessments
-                                    </a>
-                                    <a href="https://thecreed.xyz" target="_blank" class="external-link">
-                                        Visit Creed Website
-                                    </a>
-                                </div>
-                            </div>
-
-
-                            <div class="open-source-note">
-                                <h4>Open Source Framework</h4>
-                                <p>This assessment framework is open source, designed to democratize cybersecurity risk assessment while supporting the professional services offered by the Creed collective.</p>
                             </div>
                         </div>
                     </div>

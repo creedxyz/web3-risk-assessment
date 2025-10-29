@@ -102,6 +102,13 @@ body {
     align-items: flex-start;
 }
 
+.partners-section-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
 .partners-section-right h4 {
     color: #eee9e1;
     margin-bottom: 1rem;
@@ -369,31 +376,83 @@ body {
     font-size: 1rem;
 }
 
-/* Tab Navigation */
+/* Primary Tab Navigation */
 .tab-navigation {
     background: #1a1a1a;
     border-bottom: 1px solid #333;
     padding: 0 2rem;
     display: flex;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
-.tab-navigation::-webkit-scrollbar {
-    display: none;
+.primary-tabs {
+    display: flex;
+    gap: 1rem;
 }
 
-.tab-buttons-left {
+.primary-tab-button {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #888;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.primary-tab-button:hover {
+    background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+    border-color: #555;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.primary-tab-button.active {
+    background: linear-gradient(135deg, #59b583 0%, #00cc6a 100%);
+    color: #000;
+    border-color: #59b583;
+    font-weight: 600;
+}
+
+.primary-tab-button[data-primary="about"]::before {
+    content: 'ⓘ ';
+    color: inherit;
+    font-weight: bold;
+}
+
+/* Secondary Tab Navigation */
+.secondary-navigation {
+    background: #0f0f0f;
+    border-bottom: 1px solid #222;
+    padding: 0 2rem;
     display: flex;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
-.tab-buttons-left::-webkit-scrollbar {
+.secondary-navigation::-webkit-scrollbar {
+    display: none;
+}
+
+.secondary-navigation.hidden {
+    display: none;
+}
+
+.secondary-tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    width: 100%;
+    justify-content: center;
+}
+
+.secondary-tabs::-webkit-scrollbar {
     display: none;
 }
 
@@ -419,40 +478,6 @@ body {
     color: #59b583;
     border-bottom-color: #59b583;
     background: rgba(0, 255, 136, 0.1);
-}
-
-/* About tab specific styling */
-.tab-button.about-tab {
-    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-    border: 1px solid #444;
-    border-radius: 6px;
-    margin-left: 1rem;
-    padding: 0.8rem 1.2rem;
-    position: relative;
-    overflow: hidden;
-}
-
-.tab-button.about-tab::before {
-    content: 'ⓘ';
-    margin-right: 0.5rem;
-    color: #59b583;
-    font-weight: bold;
-}
-
-.tab-button.about-tab:hover {
-    background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
-    border-color: #555;
-    transform: translateY(-1px);
-}
-
-.tab-button.about-tab.active {
-    background: linear-gradient(135deg, #59b583 0%, #00cc6a 100%);
-    color: #000;
-    border-color: #59b583;
-}
-
-.tab-button.about-tab.active::before {
-    color: #000;
 }
 
 /* Main Content */
@@ -917,23 +942,26 @@ body {
 
     .tab-navigation {
         padding: 0 1rem;
-        flex-direction: column;
-        gap: 1rem;
     }
 
-    .tab-buttons-left {
+    .primary-tabs {
         width: 100%;
+        justify-content: space-between;
+    }
+
+    .primary-tab-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+        flex: 1;
+    }
+
+    .secondary-navigation {
+        padding: 0 0.5rem;
     }
 
     .tab-button {
-        padding: 1rem 0.75rem;
+        padding: 0.8rem 1rem;
         font-size: 0.8rem;
-    }
-
-    .tab-button.about-tab {
-        margin-left: 0;
-        width: 100%;
-        justify-content: center;
     }
 
     .form-grid {
@@ -1296,13 +1324,30 @@ body {
     font-weight: 700;
 }
 
+/* About Creed Hero Section */
+.about-creed-hero {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.about-creed-hero h3 {
+    color: #59b583;
+    margin-bottom: 1rem;
+}
+
+.about-creed-hero p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
 /* Open Source Note */
 .open-source-note {
     background: #1a1a1a;
     border: 1px solid #333;
     border-radius: 8px;
     padding: 1.5rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
     border-left: 4px solid #59b583;
 }
 
