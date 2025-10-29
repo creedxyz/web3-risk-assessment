@@ -376,11 +376,16 @@ body {
     font-size: 1rem;
 }
 
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+}
+
 /* Primary Tab Navigation */
 .tab-navigation {
     background: #1a1a1a;
     border-bottom: 1px solid #333;
-    padding: 0 2rem;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -388,7 +393,10 @@ body {
 
 .primary-tabs {
     display: flex;
-    gap: 1rem;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    gap: 2rem;
 }
 
 .primary-tab-button {
@@ -430,6 +438,9 @@ body {
     border-bottom: 1px solid #222;
     padding: 0 2rem;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -448,12 +459,19 @@ body {
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    width: 100%;
+    flex: 1;
     justify-content: center;
 }
 
 .secondary-tabs::-webkit-scrollbar {
     display: none;
+}
+
+.assessment-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-shrink: 0;
 }
 
 .tab-button {
@@ -957,11 +975,31 @@ body {
 
     .secondary-navigation {
         padding: 0 0.5rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .secondary-tabs {
+        justify-content: flex-start;
+        width: 100%;
+        order: 1;
+    }
+
+    .assessment-actions {
+        width: 100%;
+        order: 2;
+        justify-content: flex-end;
+        padding-top: 0.5rem;
     }
 
     .tab-button {
         padding: 0.8rem 1rem;
         font-size: 0.8rem;
+    }
+
+    .btn-small {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
     }
 
     .form-grid {

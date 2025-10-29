@@ -184,9 +184,8 @@ function initializeTabs() {
         });
     });
 
-    // Set initial state: Self-Assessment active, show secondary nav and Executive Summary
-    switchPrimaryTab('assessment');
-    switchTab('summary');
+    // Set initial state: About active by default
+    switchPrimaryTab('about');
 }
 
 function switchPrimaryTab(targetPrimary) {
@@ -531,7 +530,7 @@ function importFromJSON(event) {
 }
 
 // PDF Export function with professional Creed styling
-function exportToPDF() {
+async function exportToPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
@@ -1090,7 +1089,8 @@ function exportToPDF() {
     ];
 
     tiers.forEach((tier) => {
-        yPosition = checkPageBreak(yPosition, 30);
+        // Estimate minimum space needed for tier header
+        yPosition = checkPageBreak(yPosition, 40);
 
         // Tier name
         doc.setFontSize(11);
@@ -1098,6 +1098,9 @@ function exportToPDF() {
         setTextColor(colors.primaryDark);
         yPosition = addWrappedText(tier.name, margin, yPosition, maxLineWidth, 11);
         yPosition += 8;
+
+        // Check space before governance section
+        yPosition = checkPageBreak(yPosition, 25);
 
         // Risk Governance
         doc.setFontSize(9);
@@ -1110,6 +1113,9 @@ function exportToPDF() {
         yPosition = addWrappedText(tier.governance, margin + 15, yPosition, maxLineWidth - 15, 9);
         yPosition += 8;
 
+        // Check space before management section
+        yPosition = checkPageBreak(yPosition, 25);
+
         // Risk Management
         doc.setFont('helvetica', 'bold');
         doc.text('Risk Management:', margin + 10, yPosition);
@@ -1119,6 +1125,103 @@ function exportToPDF() {
         yPosition = addWrappedText(tier.management, margin + 15, yPosition, maxLineWidth - 15, 9);
         yPosition += 12;
     });
+
+    // Appendix A.2: Risk Maturity Levels (Nested Approach)
+    yPosition = checkPageBreak(yPosition, 60);
+
+    setFillColor(colors.accent);
+    doc.rect(margin, yPosition - 5, maxLineWidth, 12, 'F');
+
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    setTextColor(colors.primary);
+    doc.text('Appendix A.2: Risk Maturity Levels (Nested Approach to Maturity)', margin + 5, yPosition + 5);
+    yPosition += 20;
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    setTextColor(colors.black);
+
+    const maturityDescription = 'Here\'s the chart borrowed from SCF recommended practices that describes each succeeding level of maturity is built upon its predecessor, and pinpoints how this risk assessment structure is defined.';
+    yPosition = addWrappedText(maturityDescription, margin, yPosition, maxLineWidth, 10);
+    yPosition += 15;
+
+    // Add visual representation of maturity levels
+    yPosition = checkPageBreak(yPosition, 100);
+
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'italic');
+    setTextColor(colors.gray);
+
+    const maturityNote = 'The Capability Maturity Model (CMM) illustrates how each maturity level builds upon the previous one.';
+    yPosition = addWrappedText(maturityNote, margin, yPosition, maxLineWidth, 9);
+    yPosition += 10;
+
+    // // Visual tier representation
+    // const tierVisualization = [
+    //     { level: 'CMM 0 - Not Performed', description: 'Non-existent practices', xAxis: 'Non-Existent Practices' },
+    //     { level: 'CMM 1 - Performed Informally', description: 'Ad hoc practices', xAxis: 'Ad Hoc Practices' },
+    //     { level: 'CMM 2 - Planned & Tracked', description: 'Requirements-driven practices', xAxis: 'Requirements-Driven Practices' },
+    //     { level: 'CMM 3 - Well-Defined', description: 'Enterprise-wide standardization', xAxis: 'Enterprise-Wide Standardization' },
+    //     { level: 'CMM 4 - Quantitatively Controlled', description: 'Metrics-driven practices', xAxis: 'Metrics-Driven Practices' },
+    //     { level: 'CMM 5 - Continuously Improving', description: 'World-class practices', xAxis: 'World-Class Practices' }
+    // ];
+
+    // doc.setFont('helvetica', 'normal');
+    // setTextColor(colors.black);
+
+    // tierVisualization.forEach((tier, index) => {
+    //     yPosition = checkPageBreak(yPosition, 15);
+
+    //     doc.setFontSize(10);
+    //     doc.setFont('helvetica', 'bold');
+    //     doc.text(`${tier.level}`, margin + 5, yPosition);
+
+    //     doc.setFontSize(9);
+    //     doc.setFont('helvetica', 'normal');
+    //     doc.text(`- ${tier.description}`, margin + 5, yPosition + 6);
+
+    //     yPosition += 14;
+    // });
+
+    // yPosition += 10;
+
+    // Add the maturity levels image
+    yPosition = checkPageBreak(yPosition, 120);
+
+    try {
+        // Load and add the maturity levels diagram
+        const img = await new Promise((resolve, reject) => {
+            const image = new Image();
+            image.onload = () => resolve(image);
+            image.onerror = reject;
+            image.src = 'assets/riskassessment_maturity_levels.png';
+        });
+
+        // Calculate image dimensions to fit page width while maintaining aspect ratio
+        const imgWidth = maxLineWidth;
+        const imgHeight = (img.height / img.width) * imgWidth;
+
+        // Check if we need a new page for the image
+        if (yPosition + imgHeight > pageHeight - margin - 20) {
+            addFooter();
+            doc.addPage();
+            addHeader();
+            yPosition = 50;
+        }
+
+        doc.addImage(img, 'PNG', margin, yPosition, imgWidth, imgHeight);
+        yPosition += imgHeight + 10;
+    } catch (error) {
+        // If image fails to load, show a note instead
+        console.warn('Failed to load maturity levels image:', error);
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'italic');
+        setTextColor(colors.gray);
+        const imageNote = 'Note: Each level incorporates capabilities from all previous levels, creating a cumulative maturity progression. View the complete maturity levels diagram at: thecreed.xyz/riskassessments';
+        yPosition = addWrappedText(imageNote, margin, yPosition, maxLineWidth, 9);
+        yPosition += 15;
+    }
 
     // Appendix B: Identifier Glossary
     yPosition = checkPageBreak(yPosition, 60);
