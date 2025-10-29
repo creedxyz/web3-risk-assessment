@@ -276,6 +276,15 @@ function createControlElement(functionName, control) {
 
 // Event listeners
 function setupEventListeners() {
+    // Creed logo click to navigate to About page
+    const creedLogoLink = document.getElementById('creedLogoLink');
+    if (creedLogoLink) {
+        creedLogoLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            switchPrimaryTab('about');
+        });
+    }
+
     // Import/Export functionality
     importBtn.addEventListener('click', () => fileInput.click());
     exportBtn.addEventListener('click', exportToJSON);

@@ -32,8 +32,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
     gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 .logo {
@@ -41,6 +43,20 @@ body {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
+}
+
+.creed-logo-link {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.creed-logo-link:hover {
+    opacity: 0.8;
 }
 
 .creed-text-logo {
@@ -52,6 +68,28 @@ body {
     font-size: 1.2rem;
     color: #888;
     font-weight: 400;
+}
+
+.header-partner {
+    display: flex;
+    align-items: center;
+}
+
+.partner-link {
+    display: inline-block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    text-decoration: none;
+}
+
+.partner-link:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.turtle-header-logo {
+    height: 110px;
+    width: auto;
+    opacity: 0.85;
 }
 
 /* Methodology section with turtle logo */
@@ -944,14 +982,8 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .header-content {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .header-actions {
-        width: 100%;
-        justify-content: flex-start;
+    .header {
+        padding: 1rem;
     }
 
     .main-content {
@@ -1052,9 +1084,31 @@ body {
     }
 }
 
+@media (max-width: 768px) {
+    .creed-text-logo {
+        height: 40px;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .turtle-header-logo {
+        height: 80px;
+    }
+}
+
 @media (max-width: 480px) {
     .creed-text-logo {
-        height: 38px;
+        height: 32px;
+    }
+
+    .subtitle {
+        font-size: 0.8rem;
+    }
+
+    .turtle-header-logo {
+        height: 60px;
     }
 
     .btn {
