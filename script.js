@@ -1118,6 +1118,7 @@ async function exportToPDF() {
 
         // Risk Management
         doc.setFont('helvetica', 'bold');
+        setTextColor(colors.black);
         doc.text('Risk Management:', margin + 10, yPosition);
         yPosition += 6;
 
@@ -1153,38 +1154,9 @@ async function exportToPDF() {
     doc.setFont('helvetica', 'italic');
     setTextColor(colors.gray);
 
-    const maturityNote = 'The Capability Maturity Model (CMM) illustrates how each maturity level builds upon the previous one.';
+    const maturityNote = 'The Capability Maturity Model (CMM) illustrates how each level incorporates capabilities from all previous levels, creating a cumulative maturity progression.';
     yPosition = addWrappedText(maturityNote, margin, yPosition, maxLineWidth, 9);
     yPosition += 10;
-
-    // // Visual tier representation
-    // const tierVisualization = [
-    //     { level: 'CMM 0 - Not Performed', description: 'Non-existent practices', xAxis: 'Non-Existent Practices' },
-    //     { level: 'CMM 1 - Performed Informally', description: 'Ad hoc practices', xAxis: 'Ad Hoc Practices' },
-    //     { level: 'CMM 2 - Planned & Tracked', description: 'Requirements-driven practices', xAxis: 'Requirements-Driven Practices' },
-    //     { level: 'CMM 3 - Well-Defined', description: 'Enterprise-wide standardization', xAxis: 'Enterprise-Wide Standardization' },
-    //     { level: 'CMM 4 - Quantitatively Controlled', description: 'Metrics-driven practices', xAxis: 'Metrics-Driven Practices' },
-    //     { level: 'CMM 5 - Continuously Improving', description: 'World-class practices', xAxis: 'World-Class Practices' }
-    // ];
-
-    // doc.setFont('helvetica', 'normal');
-    // setTextColor(colors.black);
-
-    // tierVisualization.forEach((tier, index) => {
-    //     yPosition = checkPageBreak(yPosition, 15);
-
-    //     doc.setFontSize(10);
-    //     doc.setFont('helvetica', 'bold');
-    //     doc.text(`${tier.level}`, margin + 5, yPosition);
-
-    //     doc.setFontSize(9);
-    //     doc.setFont('helvetica', 'normal');
-    //     doc.text(`- ${tier.description}`, margin + 5, yPosition + 6);
-
-    //     yPosition += 14;
-    // });
-
-    // yPosition += 10;
 
     // Add the maturity levels image
     yPosition = checkPageBreak(yPosition, 120);
@@ -1222,6 +1194,10 @@ async function exportToPDF() {
         yPosition = addWrappedText(imageNote, margin, yPosition, maxLineWidth, 9);
         yPosition += 15;
     }
+
+    // Reset text formatting to normal after image section
+    doc.setFont('helvetica', 'normal');
+    setTextColor(colors.black);
 
     // Appendix B: Identifier Glossary
     yPosition = checkPageBreak(yPosition, 60);
