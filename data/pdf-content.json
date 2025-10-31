@@ -1,0 +1,91 @@
+{
+  "tiersIntro": "These tiers draw upon the high-level structure of the Capability Maturity Model (CMM) and Secure Controls Framework (SCF). The Tiers characterize the rigor of an organization's cybersecurity risk governance practices (GOVERN) and cybersecurity risk management practices (IDENTIFY, PROTECT, DETECT, RESPOND, and RECOVER).",
+  "tiers": [
+    {
+      "name": "Tier 0: Non-existent",
+      "governance": "not defined",
+      "management": "not performed"
+    },
+    {
+      "name": "Tier 1: Initial",
+      "governance": "Performed Informally. The application of the organizational risk strategy is managed in an ad hoc manner. Prioritization is ad hoc and not formally based on objectives or threat environment.",
+      "management": "Performed Informally. There is limited awareness of cybersecurity risks at the organizational level. The organization implements risk management on an irregular, case-by-case basis. The organization may not have processes that enable cybersecurity information to be shared within the organization. The organization is generally unaware of the cybersecurity risks associated with its suppliers and the products and services it acquires and uses."
+    },
+    {
+      "name": "Tier 2: Repeatable",
+      "governance": "Planned & tracked. Risk management practices are approved by management but may not be established as an organization-wide policy. The prioritization of cybersecurity activities and protection needs is directly informed by organizational risk objectives, the threat environment, or business/mission requirements.",
+      "management": "Requirements-Driven Practices. There is an awareness of cybersecurity risks at the organizational level, but an organization-wide approach to managing cybersecurity risks has not been established. Cybersecurity information is shared within the organization on an informal basis. The organization is aware of the cybersecurity risks associated with its suppliers and the products and services it acquires and uses, but it does not act consistently or formally in response to those risks."
+    },
+    {
+      "name": "Tier 3: Defined",
+      "governance": "Well-defined. Risk management policies and processes are documented, standardized, and integrated across the organization. The organization has developed a formal governance structure that oversees cybersecurity risk management, ensuring alignment with business and mission objectives. Cybersecurity risk governance is explicitly included in enterprise-wide decision-making processes.",
+      "management": "Enterprise-Wide Standardization. An organization-wide approach to managing cybersecurity risks is established and consistently applied. Cybersecurity roles and responsibilities are clearly defined, and personnel are trained to understand their security responsibilities. The organization has established formal mechanisms for sharing cybersecurity information both internally and externally with stakeholders. The organization formally assesses risks associated with its suppliers and enforces security requirements through contractual agreements and monitoring mechanisms."
+    },
+    {
+      "name": "Tier 4: Capable",
+      "governance": "Quantitatively Controlled. The organization's risk management practices are formally approved and expressed as policy. Risk-informed policies, processes, and procedures are defined, implemented as intended, and reviewed. Organizational cybersecurity practices are regularly updated based on the application of risk management processes to changes in business/mission requirements, threats, and technological landscape.",
+      "management": "Metrics-Driven Governance. There is an organization-wide approach to managing cybersecurity risks. Cybersecurity information is routinely shared throughout the organization. Consistent methods are in place to respond effectively to changes in risk. Personnel possess the knowledge and skills to perform their appointed roles and responsibilities. The organization consistently and accurately monitors the risks of assets. Senior cybersecurity and non-cybersecurity executives communicate regularly regarding cybersecurity risks. Executives ensure that security is considered through all lines of operation in the organization. The organization's risk strategy is informed by the cybersecurity risks associated with its suppliers and the products and services it acquires and uses. Personnel formally act upon those risks through mechanisms such as written agreements to communicate baseline requirements, governance structures (e.g., risk councils), and policy implementation and monitoring. These actions are implemented consistently and as intended and are continuously monitored and reviewed."
+    },
+    {
+      "name": "Tier 5: Efficient",
+      "governance": "Continuously Improving. There is an organization-wide approach to managing cybersecurity risks that uses risk-informed policies, processes, and procedures to address potential cybersecurity events. The relationship between cybersecurity risks and organizational objectives is clearly understood and considered when making decisions. Executives monitor cybersecurity risks in the same context as financial and other organizational risks. The organizational budget is based on an understanding of the current and predicted risk environment and risk tolerance. Business units implement the executive vision and analyze system-level risks in the context of organizational risk tolerances.",
+      "management": "World-Class Practices. Risk management is part of the organizational culture. It evolves from an awareness of previous activities and continuous awareness of activities on organizational systems and networks. The organization can quickly and efficiently account for changes to business/mission objectives in how risk is approached and communicated. The organization adapts its cybersecurity practices based on previous and current cybersecurity activities, including lessons learned and predictive indicators. Through a process of continuous improvement that incorporates advanced cybersecurity technologies and practices, the organization actively adapts to a changing technological landscape and responds in a timely and effective manner to evolving sophisticated threats. The organization uses real-time or near real-time information to understand and consistently act upon the cybersecurity risks associated with its suppliers and the products and services it acquires and uses. Cybersecurity information is constantly shared throughout the organization and with authorized third parties."
+    }
+  ],
+  "maturityDescription": "Here's the chart borrowed from SCF recommended practices that describes each succeeding level of maturity is built upon its predecessor, and pinpoints how this risk assessment structure is defined.",
+  "maturityNote": "The Capability Maturity Model (CMM) illustrates how each level incorporates capabilities from all previous levels, creating a cumulative maturity progression.",
+  "glossary": [
+    {
+      "category": "Govern (GV)",
+      "items": [
+        { "code": "GV.OC", "name": "Organizational Context" },
+        { "code": "GV.RM", "name": "Risk Management Strategy" },
+        { "code": "GV.RR", "name": "Roles, Responsibilities, And Authorities" },
+        { "code": "GV.PO", "name": "Policy" },
+        { "code": "GV.OV", "name": "Oversight" },
+        { "code": "GV.SC", "name": "Cybersecurity Supply Chain Risk Management" }
+      ]
+    },
+    {
+      "category": "Identify (ID)",
+      "items": [
+        { "code": "ID.AM", "name": "Asset Management" },
+        { "code": "ID.RA", "name": "Risk Assessment" },
+        { "code": "ID.IM", "name": "Improvement" }
+      ]
+    },
+    {
+      "category": "Protect (PR)",
+      "items": [
+        { "code": "PR.AA", "name": "Identity Management, Authentication, And Access Control" },
+        { "code": "PR.AT", "name": "Awareness And Training" },
+        { "code": "PR.DS", "name": "Data Security" },
+        { "code": "PR.PS", "name": "Platform Security" },
+        { "code": "PR.IR", "name": "Technology Infrastructure Resilience" }
+      ]
+    },
+    {
+      "category": "Detect (DE)",
+      "items": [
+        { "code": "DE.CM", "name": "Continuous Monitoring" },
+        { "code": "DE.AE", "name": "Adverse Event Analysis" }
+      ]
+    },
+    {
+      "category": "Respond (RS)",
+      "items": [
+        { "code": "RS.MA", "name": "Incident Management" },
+        { "code": "RS.AN", "name": "Incident Analysis" },
+        { "code": "RS.CO", "name": "Incident Response Reporting And Communication" },
+        { "code": "RS.MI", "name": "Incident Mitigation" }
+      ]
+    },
+    {
+      "category": "Recover (RC)",
+      "items": [
+        { "code": "RC.RP", "name": "Incident Recovery Plan Execution" },
+        { "code": "RC.CO", "name": "Incident Recovery Communication" }
+      ]
+    }
+  ]
+}

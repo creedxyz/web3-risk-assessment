@@ -1,124 +1,25 @@
-// Risk Assessment Data Structure
-const controlsData = {
-    govern: [
-        { id: 'GV.OC-01', requirement: 'The organizational mission is understood and informs cybersecurity risk management.' },
-        { id: 'GV.OC-02', requirement: 'Internal and external stakeholders are understood, and their needs and expectations regarding cybersecurity risk management are understood and considered.' },
-        { id: 'GV.OC-03', requirement: 'Legal, regulatory, and contractual requirements regarding cybersecurity – including privacy and civil liberties obligations – are understood and managed.' },
-        { id: 'GV.OC-04', requirement: 'Critical objectives, capabilities, and services stakeholders depend on or expect from the organization are understood and communicated.' },
-        { id: 'GV.OC-05', requirement: 'Outcomes, capabilities, and services that the organization depends on are understood and communicated.' },
-        { id: 'GV.RM-01', requirement: 'Risk management objectives are established and agreed to by organizational stakeholders.' },
-        { id: 'GV.RM-02', requirement: 'Risk appetite and risk tolerance statements are established, communicated, and maintained.' },
-        { id: 'GV.RM-03', requirement: 'Cybersecurity risk management activities and outcomes are included in enterprise risk management processes.' },
-        { id: 'GV.RM-04', requirement: 'A strategic direction that describes appropriate risk response options is established and communicated.' },
-        { id: 'GV.RM-05', requirement: 'Lines of communication across the organization are established for cybersecurity risks, including risks from suppliers and other third parties.' },
-        { id: 'GV.RM-06', requirement: 'A standardized method for calculating, documenting, categorizing, and prioritizing cybersecurity risks is established and communicated.' },
-        { id: 'GV.RM-07', requirement: 'Strategic opportunities (i.e., positive risks) are characterized and are included in organizational cybersecurity risk discussions.' },
-        { id: 'GV.RR-01', requirement: 'Organizational leadership is responsible and accountable for cybersecurity risk and fosters a risk-aware, ethical, and continually improving culture.' },
-        { id: 'GV.RR-02', requirement: 'Roles, responsibilities, and authorities related to cybersecurity risk management are established, communicated, understood, and enforced.' },
-        { id: 'GV.RR-03', requirement: 'Adequate resources are allocated commensurate with the cybersecurity risk strategy, roles, responsibilities, and policies.' },
-        { id: 'GV.RR-04', requirement: 'Cybersecurity is included in human resources practices (onboarding, offboarding, etc).' },
-        { id: 'GV.PO-01', requirement: 'Policy for managing cybersecurity risks is established based on organizational context, cybersecurity strategy, and priorities and is communicated and enforced.' },
-        { id: 'GV.PO-02', requirement: 'Policy for managing cybersecurity risks is reviewed, updated, communicated, and enforced to reflect changes in requirements, threats, technology, and organizational mission.' },
-        { id: 'GV.OV-01', requirement: 'Cybersecurity risk management strategy outcomes are reviewed to inform and adjust strategy and direction.' },
-        { id: 'GV.OV-02', requirement: 'The cybersecurity risk management strategy is reviewed and adjusted to ensure coverage of organizational requirements and risks.' },
-        { id: 'GV.OV-03', requirement: 'Organizational cybersecurity risk management performance is evaluated and reviewed for adjustments needed.' },
-        { id: 'GV.SC-01', requirement: 'A cybersecurity supply chain risk management program, strategy, objectives, policies, and processes are established and agreed to by organizational stakeholders.' },
-        { id: 'GV.SC-02', requirement: 'Cybersecurity roles and responsibilities for suppliers, customers, and partners are established, communicated, and coordinated internally and externally.' },
-        { id: 'GV.SC-03', requirement: 'Cybersecurity supply chain risk management is integrated into cybersecurity and enterprise risk management, risk assessment, and improvement processes.' },
-        { id: 'GV.SC-04', requirement: 'Suppliers are known and prioritized by criticality.' },
-        { id: 'GV.SC-05', requirement: 'Requirements to address cybersecurity risks in supply chains are established, prioritized, and integrated into contracts and other types of agreements with suppliers and other relevant third parties.' },
-        { id: 'GV.SC-06', requirement: 'Planning and due diligence are performed to reduce risks before entering into formal supplier or other third-party relationships.' },
-        { id: 'GV.SC-07', requirement: 'The risks posed by a supplier, their products and services, and other third parties are understood, recorded, prioritized, assessed, responded to, and monitored over the course of the relationship.' },
-        { id: 'GV.SC-08', requirement: 'Relevant suppliers and other third parties are included in incident planning, response, and recovery activities.' },
-        { id: 'GV.SC-09', requirement: 'Supply chain security practices are integrated into cybersecurity and enterprise risk management programs, and their performance is monitored throughout the technology product and service life cycle.' },
-        { id: 'GV.SC-10', requirement: 'Cybersecurity supply chain risk management plans include provisions for activities that occur after the conclusion of a partnership or service agreement.' }
-    ],
-    identify: [
-        { id: 'ID.AM-01', requirement: 'Inventories of hardware managed by the organization are maintained.' },
-        { id: 'ID.AM-02', requirement: 'Inventories of software, services, and systems managed by the organization are maintained.' },
-        { id: 'ID.AM-03', requirement: 'Representations of the organization\'s authorized network communication and internal and external network data flows are maintained.' },
-        { id: 'ID.AM-04', requirement: 'Inventories of services provided by suppliers are maintained.' },
-        { id: 'ID.AM-05', requirement: 'Assets are prioritized based on classification, criticality, resources, and impact on the mission.' },
-        { id: 'ID.AM-07', requirement: 'Inventories of data and corresponding metadata for designated data types are maintained.' },
-        { id: 'ID.AM-08', requirement: 'Systems, hardware, software, services, and data are managed throughout their life cycles.' },
-        { id: 'ID.RA-01', requirement: 'Vulnerabilities in assets are identified, validated, and recorded.' },
-        { id: 'ID.RA-02', requirement: 'Cyber threat intelligence is received from information-sharing forums and sources.' },
-        { id: 'ID.RA-03', requirement: 'Internal and external threats to the organization are identified and recorded.' },
-        { id: 'ID.RA-04', requirement: 'Potential impacts and likelihoods of threats exploiting vulnerabilities are identified and recorded.' },
-        { id: 'ID.RA-05', requirement: 'Threats, vulnerabilities, likelihoods, and impacts are used to understand inherent risk and inform risk response prioritization.' },
-        { id: 'ID.RA-06', requirement: 'Risk responses are chosen, prioritized, planned, tracked, and communicated.' },
-        { id: 'ID.RA-07', requirement: 'Changes and exceptions are managed, assessed for risk impact, recorded, and tracked.' },
-        { id: 'ID.RA-08', requirement: 'Processes for receiving, analyzing, and responding to vulnerability disclosures are established.' },
-        { id: 'ID.RA-09', requirement: 'Hardware and software\'s authenticity and integrity are assessed before acquisition and use.' },
-        { id: 'ID.RA-10', requirement: 'Critical suppliers are assessed before acquisition.' },
-        { id: 'ID.IM-01', requirement: 'Improvements are identified from evaluations.' },
-        { id: 'ID.IM-02', requirement: 'Improvements are identified from security tests and exercises, including those done in coordination with suppliers and relevant third parties.' },
-        { id: 'ID.IM-03', requirement: 'Improvements are identified from the execution of operational processes, procedures, and activities.' },
-        { id: 'ID.IM-04', requirement: 'Incident response plans and other cybersecurity plans that affect operations are established, communicated, maintained, and improved.' }
-    ],
-    protect: [
-        { id: 'PR.AA-01', requirement: 'Identities and credentials for authorized users, services, and hardware are managed by the organization.' },
-        { id: 'PR.AA-02', requirement: 'Identities are proofed and bound to credentials based on the context of interactions.' },
-        { id: 'PR.AA-03', requirement: 'Users, services, and hardware are authenticated.' },
-        { id: 'PR.AA-04', requirement: 'Identity assertions are protected, conveyed, and verified.' },
-        { id: 'PR.AA-05', requirement: 'Access permissions, entitlements, and authorizations are defined in a policy, managed, enforced, and reviewed, and incorporate the principles of least privilege and separation of duties.' },
-        { id: 'PR.AA-06', requirement: 'Physical access to assets is managed, monitored, and enforced commensurate with risk.' },
-        { id: 'PR.AT-01', requirement: 'Personnel are provided with awareness and training so that they possess the knowledge and skills to perform general tasks with cybersecurity risks in mind.' },
-        { id: 'PR.AT-02', requirement: 'Individuals in specialized roles are provided with awareness and training so that they possess the knowledge and skills to perform relevant tasks with cybersecurity risks in mind.' },
-        { id: 'PR.DS-01', requirement: 'The confidentiality, integrity, and availability of data-at-rest are protected.' },
-        { id: 'PR.DS-02', requirement: 'The confidentiality, integrity, and availability of data-in-transit are protected.' },
-        { id: 'PR.DS-10', requirement: 'The confidentiality, integrity, and availability of data-in-use are protected.' },
-        { id: 'PR.DS-11', requirement: 'Backups of data are created, protected, maintained, and tested.' },
-        { id: 'PR.PS-01', requirement: 'Configuration management practices are established and applied.' },
-        { id: 'PR.PS-02', requirement: 'Software is maintained, replaced, and removed commensurate with risk.' },
-        { id: 'PR.PS-03', requirement: 'Hardware is maintained, replaced, and removed commensurate with risk.' },
-        { id: 'PR.PS-04', requirement: 'Log records are generated and made available for continuous monitoring.' },
-        { id: 'PR.PS-05', requirement: 'Installation and execution of unauthorized software are prevented.' },
-        { id: 'PR.PS-06', requirement: 'Secure software development practices are integrated, and their performance is monitored throughout the software development life cycle.' },
-        { id: 'PR.IR-01', requirement: 'Networks and environments are protected from unauthorized logical access and usage.' },
-        { id: 'PR.IR-02', requirement: 'The organization\'s technology assets are protected from environmental threats.' },
-        { id: 'PR.IR-03', requirement: 'Mechanisms are implemented to achieve resilience requirements in normal and adverse situations.' },
-        { id: 'PR.IR-04', requirement: 'Adequate resource capacity to ensure availability is maintained.' }
-    ],
-    detect: [
-        { id: 'DE.CM-01', requirement: 'Networks and network services are monitored to find potentially adverse events.' },
-        { id: 'DE.CM-02', requirement: 'The physical environment is monitored to find potentially adverse events.' },
-        { id: 'DE.CM-03', requirement: 'Personnel activity and technology usage are monitored to find potentially adverse events.' },
-        { id: 'DE.CM-06', requirement: 'External service provider activities and services are monitored to find potentially adverse events.' },
-        { id: 'DE.CM-09', requirement: 'Computing hardware and software, runtime environments, and their data are monitored to find potentially adverse events.' },
-        { id: 'DE.AE-02', requirement: 'Potentially adverse events are analyzed to better understand associated activities.' },
-        { id: 'DE.AE-03', requirement: 'Information is correlated from multiple sources.' },
-        { id: 'DE.AE-04', requirement: 'The estimated impact and scope of adverse events are understood.' },
-        { id: 'DE.AE-06', requirement: 'Information on adverse events is provided to authorized staff and tools.' },
-        { id: 'DE.AE-07', requirement: 'Cyber threat intelligence and other contextual information are integrated into the analysis.' },
-        { id: 'DE.AE-08', requirement: 'Incidents are declared when adverse events meet the defined incident criteria.' }
-    ],
-    respond: [
-        { id: 'RS.MA-01', requirement: 'The incident response plan is executed in coordination with relevant third parties once an incident is declared.' },
-        { id: 'RS.MA-02', requirement: 'Incident reports are triaged and validated.' },
-        { id: 'RS.MA-03', requirement: 'Incidents are categorized and prioritized.' },
-        { id: 'RS.MA-04', requirement: 'Incidents are escalated or elevated as needed.' },
-        { id: 'RS.MA-05', requirement: 'The criteria for initiating incident recovery are applied.' },
-        { id: 'RS.AN-03', requirement: 'Analysis is performed to establish what has taken place during an incident and the root cause of the incident.' },
-        { id: 'RS.AN-06', requirement: 'Actions performed during an investigation are recorded, and the records\' integrity and provenance are preserved.' },
-        { id: 'RS.AN-07', requirement: 'Incident data and metadata are collected, and their integrity and provenance are preserved.' },
-        { id: 'RS.AN-08', requirement: 'An incident\'s magnitude is estimated and validated.' },
-        { id: 'RS.CO-02', requirement: 'Internal and external stakeholders are notified of incidents.' },
-        { id: 'RS.CO-03', requirement: 'Information is shared with designated internal and external stakeholders.' },
-        { id: 'RS.MI-01', requirement: 'Incidents are contained.' },
-        { id: 'RS.MI-02', requirement: 'Incidents are eradicated.' }
-    ],
-    recover: [
-        { id: 'RC.RP-01', requirement: 'The recovery portion of the incident response plan is executed once initiated from the incident response process.' },
-        { id: 'RC.RP-02', requirement: 'Recovery actions are selected, scoped, prioritized, and performed.' },
-        { id: 'RC.RP-03', requirement: 'The integrity of backups and other restoration assets is verified before using them for restoration.' },
-        { id: 'RC.RP-04', requirement: 'Critical mission functions and cybersecurity risk management are considered to establish post-incident operational norms.' },
-        { id: 'RC.RP-05', requirement: 'The integrity of restored assets is verified, systems and services are restored, and normal operating status is confirmed.' },
-        { id: 'RC.RP-06', requirement: 'The end of incident recovery is declared based on criteria, and incident-related documentation is completed.' },
-        { id: 'RC.CO-03', requirement: 'Recovery activities and progress in restoring operational capabilities are communicated to designated internal and external stakeholders.' },
-        { id: 'RC.CO-04', requirement: 'Public updates on incident recovery are shared using approved methods and messaging.' }
-    ]
-};
+// Data loaded from external JSON files
+let controlsData = null;
+let pdfContent = null;
+
+// Load data from JSON files
+async function loadData() {
+    try {
+        const [controlsResponse, pdfResponse] = await Promise.all([
+            fetch('data/controls.json'),
+            fetch('data/pdf-content.json')
+        ]);
+
+        controlsData = await controlsResponse.json();
+        pdfContent = await pdfResponse.json();
+
+        return true;
+    } catch (error) {
+        console.error('Error loading data files:', error);
+        alert('Failed to load assessment data. Please refresh the page.');
+        return false;
+    }
+}
 
 // Application state
 let assessmentData = {
@@ -135,17 +36,6 @@ let assessmentData = {
     controls: {}
 };
 
-// Initialize controls data structure
-Object.keys(controlsData).forEach(functionName => {
-    assessmentData.controls[functionName] = {};
-    controlsData[functionName].forEach(control => {
-        assessmentData.controls[functionName][control.id] = {
-            status: '',
-            explanation: ''
-        };
-    });
-});
-
 // DOM Elements
 const primaryTabButtons = document.querySelectorAll('.primary-tab-button');
 const tabButtons = document.querySelectorAll('.tab-button');
@@ -158,7 +48,22 @@ const fileInput = document.getElementById('fileInput');
 const clearCacheBtn = document.getElementById('clearCacheBtn');
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    // Load data from JSON files first
+    const dataLoaded = await loadData();
+    if (!dataLoaded) return;
+
+    // Initialize controls data structure
+    Object.keys(controlsData).forEach(functionName => {
+        assessmentData.controls[functionName] = {};
+        controlsData[functionName].forEach(control => {
+            assessmentData.controls[functionName][control.id] = {
+                status: '',
+                explanation: ''
+            };
+        });
+    });
+
     initializeTabs();
     initializeControls();
     loadFromLocalStorage();
@@ -1083,21 +988,10 @@ async function exportToPDF() {
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
     setTextColor(colors.black);
-    const tiersIntro = 'These tiers draw upon the high-level structure of the Capability Maturity Model (CMM) and Secure Controls Framework (SCF). The Tiers characterize the rigor of an organization\'s cybersecurity risk governance practices (GOVERN) and cybersecurity risk management practices (IDENTIFY, PROTECT, DETECT, RESPOND, and RECOVER).';
-    yPosition = addWrappedText(tiersIntro, margin, yPosition, maxLineWidth, 10);
+    yPosition = addWrappedText(pdfContent.tiersIntro, margin, yPosition, maxLineWidth, 10);
     yPosition += 15;
 
-    // Tier definitions
-    const tiers = [
-        { name: 'Tier 0: Non-existent', governance: 'not defined', management: 'not performed' },
-        { name: 'Tier 1: Initial', governance: 'Performed Informally. The application of the organizational risk strategy is managed in an ad hoc manner. Prioritization is ad hoc and not formally based on objectives or threat environment.', management: 'Performed Informally. There is limited awareness of cybersecurity risks at the organizational level. The organization implements risk management on an irregular, case-by-case basis. The organization may not have processes that enable cybersecurity information to be shared within the organization. The organization is generally unaware of the cybersecurity risks associated with its suppliers and the products and services it acquires and uses.' },
-        { name: 'Tier 2: Repeatable', governance: 'Planned & tracked. Risk management practices are approved by management but may not be established as an organization-wide policy. The prioritization of cybersecurity activities and protection needs is directly informed by organizational risk objectives, the threat environment, or business/mission requirements.', management: 'Requirements-Driven Practices. There is an awareness of cybersecurity risks at the organizational level, but an organization-wide approach to managing cybersecurity risks has not been established. Cybersecurity information is shared within the organization on an informal basis. The organization is aware of the cybersecurity risks associated with its suppliers and the products and services it acquires and uses, but it does not act consistently or formally in response to those risks.' },
-        { name: 'Tier 3: Defined', governance: 'Well-defined. Risk management policies and processes are documented, standardized, and integrated across the organization. The organization has developed a formal governance structure that oversees cybersecurity risk management, ensuring alignment with business and mission objectives. Cybersecurity risk governance is explicitly included in enterprise-wide decision-making processes.', management: 'Enterprise-Wide Standardization. An organization-wide approach to managing cybersecurity risks is established and consistently applied. Cybersecurity roles and responsibilities are clearly defined, and personnel are trained to understand their security responsibilities. The organization has established formal mechanisms for sharing cybersecurity information both internally and externally with stakeholders. The organization formally assesses risks associated with its suppliers and enforces security requirements through contractual agreements and monitoring mechanisms.' },
-        { name: 'Tier 4: Capable', governance: 'Quantitatively Controlled. The organization\'s risk management practices are formally approved and expressed as policy. Risk-informed policies, processes, and procedures are defined, implemented as intended, and reviewed. Organizational cybersecurity practices are regularly updated based on the application of risk management processes to changes in business/mission requirements, threats, and technological landscape.', management: 'Metrics-Driven Governance. There is an organization-wide approach to managing cybersecurity risks. Cybersecurity information is routinely shared throughout the organization. Consistent methods are in place to respond effectively to changes in risk. Personnel possess the knowledge and skills to perform their appointed roles and responsibilities. The organization consistently and accurately monitors the risks of assets. Senior cybersecurity and non-cybersecurity executives communicate regularly regarding cybersecurity risks. Executives ensure that security is considered through all lines of operation in the organization. The organization\'s risk strategy is informed by the cybersecurity risks associated with its suppliers and the products and services it acquires and uses. Personnel formally act upon those risks through mechanisms such as written agreements to communicate baseline requirements, governance structures (e.g., risk councils), and policy implementation and monitoring. These actions are implemented consistently and as intended and are continuously monitored and reviewed.' },
-        { name: 'Tier 5: Efficient', governance: 'Continuously Improving. There is an organization-wide approach to managing cybersecurity risks that uses risk-informed policies, processes, and procedures to address potential cybersecurity events. The relationship between cybersecurity risks and organizational objectives is clearly understood and considered when making decisions. Executives monitor cybersecurity risks in the same context as financial and other organizational risks. The organizational budget is based on an understanding of the current and predicted risk environment and risk tolerance. Business units implement the executive vision and analyze system-level risks in the context of organizational risk tolerances.', management: 'World-Class Practices. Risk management is part of the organizational culture. It evolves from an awareness of previous activities and continuous awareness of activities on organizational systems and networks. The organization can quickly and efficiently account for changes to business/mission objectives in how risk is approached and communicated. The organization adapts its cybersecurity practices based on previous and current cybersecurity activities, including lessons learned and predictive indicators. Through a process of continuous improvement that incorporates advanced cybersecurity technologies and practices, the organization actively adapts to a changing technological landscape and responds in a timely and effective manner to evolving sophisticated threats. The organization uses real-time or near real-time information to understand and consistently act upon the cybersecurity risks associated with its suppliers and the products and services it acquires and uses. Cybersecurity information is constantly shared throughout the organization and with authorized third parties.' }
-    ];
-
-    tiers.forEach((tier) => {
+    pdfContent.tiers.forEach((tier) => {
         // Estimate minimum space needed for tier header
         yPosition = checkPageBreak(yPosition, 40);
 
@@ -1152,8 +1046,7 @@ async function exportToPDF() {
     doc.setFont('helvetica', 'normal');
     setTextColor(colors.black);
 
-    const maturityDescription = 'Here\'s the chart borrowed from SCF recommended practices that describes each succeeding level of maturity is built upon its predecessor, and pinpoints how this risk assessment structure is defined.';
-    yPosition = addWrappedText(maturityDescription, margin, yPosition, maxLineWidth, 10);
+    yPosition = addWrappedText(pdfContent.maturityDescription, margin, yPosition, maxLineWidth, 10);
     yPosition += 15;
 
     // Add visual representation of maturity levels
@@ -1163,8 +1056,7 @@ async function exportToPDF() {
     doc.setFont('helvetica', 'italic');
     setTextColor(colors.gray);
 
-    const maturityNote = 'The Capability Maturity Model (CMM) illustrates how each level incorporates capabilities from all previous levels, creating a cumulative maturity progression.';
-    yPosition = addWrappedText(maturityNote, margin, yPosition, maxLineWidth, 9);
+    yPosition = addWrappedText(pdfContent.maturityNote, margin, yPosition, maxLineWidth, 9);
     yPosition += 10;
 
     // Add the maturity levels image
@@ -1220,44 +1112,7 @@ async function exportToPDF() {
     doc.text('Appendix B: Identifier Glossary', margin + 5, yPosition + 5);
     yPosition += 20;
 
-    const glossaryEntries = [
-        { category: 'Govern (GV)', items: [
-            { code: 'GV.OC', name: 'Organizational Context' },
-            { code: 'GV.RM', name: 'Risk Management Strategy' },
-            { code: 'GV.RR', name: 'Roles, Responsibilities, And Authorities' },
-            { code: 'GV.PO', name: 'Policy' },
-            { code: 'GV.OV', name: 'Oversight' },
-            { code: 'GV.SC', name: 'Cybersecurity Supply Chain Risk Management' }
-        ]},
-        { category: 'Identify (ID)', items: [
-            { code: 'ID.AM', name: 'Asset Management' },
-            { code: 'ID.RA', name: 'Risk Assessment' },
-            { code: 'ID.IM', name: 'Improvement' }
-        ]},
-        { category: 'Protect (PR)', items: [
-            { code: 'PR.AA', name: 'Identity Management, Authentication, And Access Control' },
-            { code: 'PR.AT', name: 'Awareness And Training' },
-            { code: 'PR.DS', name: 'Data Security' },
-            { code: 'PR.PS', name: 'Platform Security' },
-            { code: 'PR.IR', name: 'Technology Infrastructure Resilience' }
-        ]},
-        { category: 'Detect (DE)', items: [
-            { code: 'DE.CM', name: 'Continuous Monitoring' },
-            { code: 'DE.AE', name: 'Adverse Event Analysis' }
-        ]},
-        { category: 'Respond (RS)', items: [
-            { code: 'RS.MA', name: 'Incident Management' },
-            { code: 'RS.AN', name: 'Incident Analysis' },
-            { code: 'RS.CO', name: 'Incident Response Reporting And Communication' },
-            { code: 'RS.MI', name: 'Incident Mitigation' }
-        ]},
-        { category: 'Recover (RC)', items: [
-            { code: 'RC.RP', name: 'Incident Recovery Plan Execution' },
-            { code: 'RC.CO', name: 'Incident Recovery Communication' }
-        ]}
-    ];
-
-    glossaryEntries.forEach((entry) => {
+    pdfContent.glossary.forEach((entry) => {
         yPosition = checkPageBreak(yPosition, entry.items.length * 6 + 10);
 
         // Category header
