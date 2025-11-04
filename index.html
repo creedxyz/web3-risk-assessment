@@ -66,25 +66,30 @@
         </header>
 
         <div class="header-title-section">
-            <h1 class="header-main-title">About<span class="mobile-break"></span> This Risk<span class="desktop-break mobile-break"></span> Assessment<span class="mobile-break"></span> Framework</h1>
+            <img src="assets/line.svg" alt="" class="header-line-decoration">
+            <h1 class="header-main-title header-main-title-desktop">About This Risk<br>Assessment Framework</h1>
+            <h1 class="header-main-title header-main-title-mobile">About<br>This Risk Assessment<br>Framework</h1>
+            <img style="transform: rotate(180deg);" src="assets/line.svg" alt="" class="header-line-decoration">
         </div>
 
-        <nav class="secondary-navigation hidden" id="assessment-tabs">
-            <div class="secondary-tabs">
-                <button class="tab-button active" data-tab="summary">Executive Summary</button>
-                <button class="tab-button" data-tab="govern">Govern</button>
-                <button class="tab-button" data-tab="identify">Identify</button>
-                <button class="tab-button" data-tab="protect">Protect</button>
-                <button class="tab-button" data-tab="detect">Detect</button>
-                <button class="tab-button" data-tab="respond">Respond</button>
-                <button class="tab-button" data-tab="recover">Recover</button>
-            </div>
-            <div class="assessment-actions">
+        <div class="navigation-container hidden" id="navigation-container">
+            <nav class="secondary-navigation" id="assessment-tabs">
+                <div class="secondary-tabs">
+                    <button class="tab-button active" data-tab="summary">Executive Summary</button>
+                    <button class="tab-button" data-tab="govern">Govern</button>
+                    <button class="tab-button" data-tab="identify">Identify</button>
+                    <button class="tab-button" data-tab="protect">Protect</button>
+                    <button class="tab-button" data-tab="detect">Detect</button>
+                    <button class="tab-button" data-tab="respond">Respond</button>
+                    <button class="tab-button" data-tab="recover">Recover</button>
+                </div>
+            </nav>
+            <div class="assessment-actions" id="assessment-actions">
                 <button id="importBtn" class="btn btn-secondary btn-small">Import JSON</button>
                 <button id="exportBtn" class="btn btn-secondary btn-small">Export JSON</button>
                 <button id="exportPdfBtn" class="btn btn-primary btn-small">Export PDF</button>
             </div>
-        </nav>
+        </div>
 
         <main class="main-content">
             <!-- Executive Summary Tab -->
@@ -109,7 +114,7 @@
                             </thead>
                             <tbody>
                                 <tr class="function-row govern-row">
-                                    <td class="function-name-cell govern">Govern</td>
+                                    <td class="function-name-cell govern"><span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 100px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;"><div class="function-indicator"></div>Govern</span></td>
                                     <td>31</td>
                                     <td id="govern-implemented">0</td>
                                     <td id="govern-not-implemented">0</td>
@@ -117,7 +122,7 @@
                                     <td id="govern-tier">-</td>
                                 </tr>
                                 <tr class="function-row identify-row">
-                                    <td class="function-name-cell identify">Identify</td>
+                                    <td class="function-name-cell identify"><span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 100px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;"><div class="function-indicator"></div>Identify</span></td>
                                     <td>21</td>
                                     <td id="identify-implemented">0</td>
                                     <td id="identify-not-implemented">0</td>
@@ -125,7 +130,7 @@
                                     <td id="identify-tier">-</td>
                                 </tr>
                                 <tr class="function-row protect-row">
-                                    <td class="function-name-cell protect">Protect</td>
+                                    <td class="function-name-cell protect"><span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 100px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;"><div class="function-indicator"></div>Protect</span></td>
                                     <td>22</td>
                                     <td id="protect-implemented">0</td>
                                     <td id="protect-not-implemented">0</td>
@@ -133,7 +138,7 @@
                                     <td id="protect-tier">-</td>
                                 </tr>
                                 <tr class="function-row detect-row">
-                                    <td class="function-name-cell detect">Detect</td>
+                                    <td class="function-name-cell detect"><span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 100px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;"><div class="function-indicator"></div>Detect</span></td>
                                     <td>11</td>
                                     <td id="detect-implemented">0</td>
                                     <td id="detect-not-implemented">0</td>
@@ -141,7 +146,7 @@
                                     <td id="detect-tier">-</td>
                                 </tr>
                                 <tr class="function-row respond-row">
-                                    <td class="function-name-cell respond">Respond</td>
+                                    <td class="function-name-cell respond"><span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 100px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;"><div class="function-indicator"></div>Respond</span></td>
                                     <td>13</td>
                                     <td id="respond-implemented">0</td>
                                     <td id="respond-not-implemented">0</td>
@@ -149,7 +154,7 @@
                                     <td id="respond-tier">-</td>
                                 </tr>
                                 <tr class="function-row recover-row">
-                                    <td class="function-name-cell recover">Recover</td>
+                                    <td class="function-name-cell recover"><span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 100px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;"><div class="function-indicator"></div>Recover</span></td>
                                     <td>8</td>
                                     <td id="recover-implemented">0</td>
                                     <td id="recover-not-implemented">0</td>
@@ -290,7 +295,7 @@
                                 Our assessments evaluate projects across six critical functions: <span class="highlight">Govern</span>, <span class="highlight">Identify</span>, <span class="highlight">Protect</span>, <span class="highlight">Detect</span>, <span class="highlight">Respond</span>, and <span class="highlight">Recover</span> - providing a comprehensive view of an organization's cybersecurity posture and maturity.
                             </p>
 
-                            <h3 style="margin-top: 2rem;">How to Use This Self-Assessment Tool</h3>
+                            <h3 style="margin-top: 3rem;">How to Use This Self-Assessment Tool</h3>
                             <p class="description">
                                 This open-source framework enables Web3 projects to conduct comprehensive security assessments on their own timeline. Navigate to the <strong>Self-Assessment</strong> tab to begin evaluating your project across all 106 NIST controls.
                             </p>
@@ -317,7 +322,7 @@
                                 </ul>
                             </div>
 
-                            <div style="background: #1a1a1a; padding: 1.5rem; margin: 1.5rem 0; border-radius: 20px; ">
+                            <div style="background: #1a1a1a; padding: 1.5rem; margin: 2.5rem 0; border-radius: 20px; ">
                                 <h4 style="color: #eff8ed; margin-bottom: 1rem; font-weight: 500; font-size: 1.25rem;">Beyond Checkbox Compliance</h4>
                                 <p class="description" style="margin-bottom: 1rem; font-size: 1.125rem;">
                                     While this self-assessment tool helps teams understand where they stand, <span style="color: #f9f9f9;">the real value comes from the conversations it enables</span>. Questions like "What should our incident response plan include?" or "How do we establish effective onboarding and offboarding procedures?" require discussion, expertise, and tailored guidance.
@@ -357,9 +362,6 @@
                                     <p style="color: rgba(255, 255, 255, 0.5); font-size: 1rem; margin-bottom: 1.5rem;">Learn More & View Past Assessments</p>
                                 </div>
                                 <div class="consultation-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                                    <button class="btn btn-secondary-consultation" onclick="window.open('https://form.typeform.com/to/nlWHgMTF', '_blank')" style="background: #2a2a2a; color: #f9f9f9; border: none; padding: 0.75rem 2rem; border-radius: 100px; font-size: 0.75rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer;">
-                                        Schedule a Consultation
-                                    </button>
                                     <button class="btn btn-primary-consultation" onclick="window.open('https://form.typeform.com/to/nlWHgMTF', '_blank')" style="background: #2a2a2a; color: #73f36c; border: none; padding: 0.75rem 2rem; border-radius: 100px; font-size: 0.75rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer;">
                                         Schedule a Consultation
                                     </button>
@@ -552,6 +554,9 @@
 
         <!-- CTA Section -->
         <section class="cta-section">
+            <img src="assets/turtles/turtle-1.png" alt="" class="turtle-decoration turtle-1">
+            <img src="assets/turtles/turtle-2.png" alt="" class="turtle-decoration turtle-2">
+            <img src="assets/turtles/turtle-3.png" alt="" class="turtle-decoration turtle-3">
             <div class="cta-content">
                 <h2>Protect Your Business,<br>Investors, and Users</h2>
                 <div class="cta-features">
