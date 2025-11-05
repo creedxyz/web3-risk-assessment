@@ -40,7 +40,9 @@ let assessmentData = {
 const primaryTabButtons = document.querySelectorAll('.primary-tab-button');
 const tabButtons = document.querySelectorAll('.tab-button');
 const tabContents = document.querySelectorAll('.tab-content');
+const navigationContainer = document.getElementById('navigation-container');
 const secondaryNav = document.getElementById('assessment-tabs');
+const assessmentActions = document.getElementById('assessment-actions');
 const importBtn = document.getElementById('importBtn');
 const exportBtn = document.getElementById('exportBtn');
 const exportPdfBtn = document.getElementById('exportPdfBtn');
@@ -99,13 +101,13 @@ function switchPrimaryTab(targetPrimary) {
     document.querySelector(`[data-primary="${targetPrimary}"]`).classList.add('active');
 
     if (targetPrimary === 'about') {
-        // Show About tab, hide secondary navigation
-        secondaryNav.classList.add('hidden');
+        // Show About tab, hide navigation container
+        navigationContainer.classList.add('hidden');
         tabContents.forEach(content => content.classList.remove('active'));
         document.getElementById('about').classList.add('active');
     } else if (targetPrimary === 'assessment') {
-        // Show secondary navigation and default to currently active tab
-        secondaryNav.classList.remove('hidden');
+        // Show navigation container and default to currently active tab
+        navigationContainer.classList.remove('hidden');
         // Find active secondary tab or default to summary
         const activeSecondaryTab = document.querySelector('.tab-button.active');
         const targetTab = activeSecondaryTab ? activeSecondaryTab.getAttribute('data-tab') : 'summary';
@@ -127,6 +129,22 @@ function switchTab(targetTab) {
     if (targetContent) {
         targetContent.classList.add('active');
     }
+}
+
+// Helper function to get current primary tab
+function getCurrentPrimaryTab() {
+    const activeButton = document.querySelector('.primary-tab-button.active');
+    return activeButton ? activeButton.getAttribute('data-primary') : 'about';
+}
+
+// Helper function to check if currently on About tab
+function isAboutTab() {
+    return getCurrentPrimaryTab() === 'about';
+}
+
+// Helper function to check if currently on Assessment tab
+function isAssessmentTab() {
+    return getCurrentPrimaryTab() === 'assessment';
 }
 
 // Initialize controls for each function
@@ -151,7 +169,7 @@ function createControlElement(functionName, control) {
         <div class="control-main">
             <div class="control-left">
                 <div class="control-header">
-                    <div class="control-id ${functionName}">${control.id}</div>
+                    <div class="control-id ${functionName}"><div class="function-indicator"></div>${control.id}</div>
                     <div class="control-status">
                         <select id="${control.id}-status" data-function="${functionName}" data-control="${control.id}">
                             <option value="">Select Status</option>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creed Web3 Risk Assessment Framework</title>
+    <title>Web3 Risk Assessment Framework - Creed</title>
 
     <!-- SEO Meta Tags -->
     <meta name="description" content="Interactive Web3 cybersecurity risk assessment tool based on NIST CSF v2.0. Evaluate DeFi and Web3 teams across 106 security controls with professional reporting.">
@@ -31,8 +31,8 @@
     <meta property="twitter:site" content="@creeddao">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/creed-logo.svg">
-    <link rel="apple-touch-icon" href="assets/creed-logo.svg">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.ico">    
+    <link rel="apple-touch-icon" href="assets/favicon.ico">
 
     <!-- Additional SEO -->
     <meta name="theme-color" content="#59b583">
@@ -40,50 +40,56 @@
     <link rel="canonical" href="https://web3risk.thecreed.xyz">
 
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <div class="container">
         <header class="header">
             <div class="header-content">
-                <div class="logo">
-                    <a href="#" id="creedLogoLink" class="creed-logo-link">
-                        <img src="assets/creed-text.svg" alt="CREED" class="creed-text-logo">
-                        <span class="subtitle">Web3 Risk Assessment Framework</span>
-                    </a>
+                <div class="header-logos">
+                    <div class="header-partner">
+                        <a href="https://app.turtle.xyz/partners" target="_blank" class="partner-link">
+                            <img src="assets/Turtle-club-Full-NeonGReen.svg" alt="Turtle Club Partner" class="turtle-header-logo">
+                        </a>
+                    </div>
+                    <div class="logo">
+                        <a href="https://thecreed.xyz/riskassessments" target="_blank" class="creed-logo-link">
+                            <img src="assets/creed-text.svg" alt="CREED" class="creed-text-logo">
+                        </a>
+                    </div>
                 </div>
-                <div class="header-partner">
-                    <a href="https://app.turtle.xyz/partners" target="_blank" class="partner-link">
-                        <img src="assets/Turtle-club-Full-NeonGReen.svg" alt="Turtle Club Partner" class="turtle-header-logo">
-                    </a>
+                <div class="primary-tabs">
+                    <button class="primary-tab-button" data-primary="assessment">Self-Assessment</button>
+                    <button class="primary-tab-button active" data-primary="about">About</button>
                 </div>
             </div>
         </header>
 
-        <nav class="tab-navigation">
-            <div class="primary-tabs">
-                <button class="primary-tab-button" data-primary="assessment">Self-Assessment</button>
-                <button class="primary-tab-button active" data-primary="about">About</button>
-            </div>
-        </nav>
+        <div class="header-title-section">
+            <img src="assets/line.svg" alt="" class="header-line-decoration">
+            <h1 class="header-main-title header-main-title-desktop">About This Risk<br>Assessment Framework</h1>
+            <h1 class="header-main-title header-main-title-mobile">About<br>This Risk Assessment<br>Framework</h1>
+            <img style="transform: rotate(180deg);" src="assets/line.svg" alt="" class="header-line-decoration">
+        </div>
 
-        <nav class="secondary-navigation hidden" id="assessment-tabs">
-            <div class="secondary-tabs">
-                <button class="tab-button active" data-tab="summary">Executive Summary</button>
-                <button class="tab-button" data-tab="govern">Govern</button>
-                <button class="tab-button" data-tab="identify">Identify</button>
-                <button class="tab-button" data-tab="protect">Protect</button>
-                <button class="tab-button" data-tab="detect">Detect</button>
-                <button class="tab-button" data-tab="respond">Respond</button>
-                <button class="tab-button" data-tab="recover">Recover</button>
-            </div>
-            <div class="assessment-actions">
+        <div class="navigation-container hidden" id="navigation-container">
+            <nav class="secondary-navigation" id="assessment-tabs">
+                <div class="secondary-tabs">
+                    <button class="tab-button active" data-tab="summary">Executive Summary</button>
+                    <button class="tab-button" data-tab="govern">Govern</button>
+                    <button class="tab-button" data-tab="identify">Identify</button>
+                    <button class="tab-button" data-tab="protect">Protect</button>
+                    <button class="tab-button" data-tab="detect">Detect</button>
+                    <button class="tab-button" data-tab="respond">Respond</button>
+                    <button class="tab-button" data-tab="recover">Recover</button>
+                </div>
+            </nav>
+            <div class="assessment-actions" id="assessment-actions">
                 <button id="importBtn" class="btn btn-secondary btn-small">Import JSON</button>
                 <button id="exportBtn" class="btn btn-secondary btn-small">Export JSON</button>
                 <button id="exportPdfBtn" class="btn btn-primary btn-small">Export PDF</button>
             </div>
-        </nav>
+        </div>
 
         <main class="main-content">
             <!-- Executive Summary Tab -->
@@ -108,7 +114,7 @@
                             </thead>
                             <tbody>
                                 <tr class="function-row govern-row">
-                                    <td class="function-name-cell govern">Govern</td>
+                                    <td class="function-name-cell govern"><span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 100px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;"><div class="function-indicator"></div>Govern</span></td>
                                     <td>31</td>
                                     <td id="govern-implemented">0</td>
                                     <td id="govern-not-implemented">0</td>
@@ -116,7 +122,7 @@
                                     <td id="govern-tier">-</td>
                                 </tr>
                                 <tr class="function-row identify-row">
-                                    <td class="function-name-cell identify">Identify</td>
+                                    <td class="function-name-cell identify"><span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 100px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;"><div class="function-indicator"></div>Identify</span></td>
                                     <td>21</td>
                                     <td id="identify-implemented">0</td>
                                     <td id="identify-not-implemented">0</td>
@@ -124,7 +130,7 @@
                                     <td id="identify-tier">-</td>
                                 </tr>
                                 <tr class="function-row protect-row">
-                                    <td class="function-name-cell protect">Protect</td>
+                                    <td class="function-name-cell protect"><span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 100px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;"><div class="function-indicator"></div>Protect</span></td>
                                     <td>22</td>
                                     <td id="protect-implemented">0</td>
                                     <td id="protect-not-implemented">0</td>
@@ -132,7 +138,7 @@
                                     <td id="protect-tier">-</td>
                                 </tr>
                                 <tr class="function-row detect-row">
-                                    <td class="function-name-cell detect">Detect</td>
+                                    <td class="function-name-cell detect"><span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 100px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;"><div class="function-indicator"></div>Detect</span></td>
                                     <td>11</td>
                                     <td id="detect-implemented">0</td>
                                     <td id="detect-not-implemented">0</td>
@@ -140,7 +146,7 @@
                                     <td id="detect-tier">-</td>
                                 </tr>
                                 <tr class="function-row respond-row">
-                                    <td class="function-name-cell respond">Respond</td>
+                                    <td class="function-name-cell respond"><span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 100px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;"><div class="function-indicator"></div>Respond</span></td>
                                     <td>13</td>
                                     <td id="respond-implemented">0</td>
                                     <td id="respond-not-implemented">0</td>
@@ -148,7 +154,7 @@
                                     <td id="respond-tier">-</td>
                                 </tr>
                                 <tr class="function-row recover-row">
-                                    <td class="function-name-cell recover">Recover</td>
+                                    <td class="function-name-cell recover"><span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 100px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;"><div class="function-indicator"></div>Recover</span></td>
                                     <td>8</td>
                                     <td id="recover-implemented">0</td>
                                     <td id="recover-not-implemented">0</td>
@@ -274,15 +280,13 @@
             <!-- About Tab -->
             <div id="about" class="tab-content active">
                 <div class="section">
-                    <h2>About This Risk Assessment Framework</h2>
-
                     <div class="about-content">
                         <div class="about-section">
                             <h3>Comprehensive Risk Assessment Methodology</h3>
                             <div class="methodology-content">
                                 <div class="methodology-text">
                                     <p class="description">
-                                        Creed performs detailed risk assessments for DeFi protocols, NFT platforms, DAOs, and the entire Web3 ecosystem using a newly standardized methodology based on the <strong>NIST Capability Maturity Model (CMM)</strong>, <strong>Cybersecurity Framework v2.0 (CSF)</strong>, and <strong>Secure Controls Framework (SCF)</strong>.
+                                        Creed performs detailed risk assessments for DeFi protocols, NFT platforms, DAOs, and the entire Web3 ecosystem using a newly standardized methodology based on the NIST Capability Maturity Model (CMM), Cybersecurity Framework v2.0 (CSF), and Secure Controls Framework (SCF).
                                     </p>
                                 </div>
 
@@ -290,45 +294,53 @@
                             <p class="description">
                                 Our assessments evaluate projects across six critical functions: <span class="highlight">Govern</span>, <span class="highlight">Identify</span>, <span class="highlight">Protect</span>, <span class="highlight">Detect</span>, <span class="highlight">Respond</span>, and <span class="highlight">Recover</span> - providing a comprehensive view of an organization's cybersecurity posture and maturity.
                             </p>
-
-                            <h3 style="margin-top: 2rem;">How to Use This Self-Assessment Tool</h3>
+                                
+                            <h3 style="margin-top: 3rem;">How to Use This Self-Assessment Tool</h3>
                             <p class="description">
                                 This open-source framework enables Web3 projects to conduct comprehensive security assessments on their own timeline. Navigate to the <strong>Self-Assessment</strong> tab to begin evaluating your project across all 106 NIST controls.
                             </p>
 
                             <div class="usage-benefits" style="margin: 1.5rem 0;">
-                                <h4 style="color: #59b583; margin-bottom: 1rem;">What You Can Do:</h4>
+                                <h4 class="usage-benefits-title">What You Can Do:</h4>
                                 <ul style="list-style: none; padding: 0;">
-                                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
-                                        <span style="position: absolute; left: 0; color: #59b583;">→</span>
-                                        <strong>Self-assess</strong> your security posture using our interactive tool
+                                    <li class="usage-benefit-item">
+                                        <img src="assets/status.svg" alt="" class="bullet-icon">
+                                        Self-assess <span class="light">your security posture using our interactive tool</span>
                                     </li>
-                                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
-                                        <span style="position: absolute; left: 0; color: #59b583;">→</span>
-                                        <strong>Generate professional reports</strong> (PDF) showcasing your security maturity
+                                    <li class="usage-benefit-item">
+                                        <img src="assets/status.svg" alt="" class="bullet-icon">
+                                        Generate professional reports <span class="light">(PDF) showcasing your security maturity</span>
                                     </li>
-                                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
-                                        <span style="position: absolute; left: 0; color: #59b583;">→</span>
-                                        <strong>Track improvements</strong> as you implement new controls over time
+                                    <li class="usage-benefit-item">
+                                        <img src="assets/status.svg" alt="" class="bullet-icon">
+                                        Track improvements <span class="light">as you implement new controls over time</span>
                                     </li>
-                                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
-                                        <span style="position: absolute; left: 0; color: #59b583;">→</span>
-                                        <strong>Demonstrate transparency</strong> to stakeholders with standardized metrics
+                                    <li class="usage-benefit-item">
+                                        <img src="assets/status.svg" alt="" class="bullet-icon">
+                                        Demonstrate transparency <span class="light">to stakeholders with standardized metrics</span>
                                     </li>
                                 </ul>
                             </div>
 
-                            <div style="background: #1a1a1a; border-left: 4px solid #59b583; padding: 1.5rem; margin: 1.5rem 0; border-radius: 4px;">
-                                <h4 style="color: #59b583; margin-bottom: 1rem;">Beyond Checkbox Compliance</h4>
-                                <p class="description" style="margin-bottom: 1rem;">
-                                    While this self-assessment tool helps teams understand where they stand, <strong>the real value comes from the conversations it enables</strong>. Questions like "What should our incident response plan include?" or "How do we establish effective onboarding and offboarding procedures?" require discussion, expertise, and tailored guidance.
+                            <div style="background: #1a1a1a; padding: 1.5rem; margin: 2.5rem 0; border-radius: 20px; ">
+                                <h4 style="color: #eff8ed; margin-bottom: 1rem; font-weight: 500; font-size: 1.25rem;">Beyond Checkbox Compliance</h4>
+                                <p class="description" style="margin-bottom: 1rem; font-size: 1.125rem;">
+                                    While this self-assessment tool helps teams understand where they stand, <span style="color: #f9f9f9;">the real value comes from the conversations it enables</span>. Questions like "What should our incident response plan include?" or "How do we establish effective onboarding and offboarding procedures?" require discussion, expertise, and tailored guidance.
                                 </p>
-                                <p class="description" style="margin-bottom: 1rem;">
-                                    <strong>Creed's professional consultation services</strong> provide expert guidance to help teams develop internal policies, design incident response plans, establish risk management frameworks, and guide decision-making on complex security trade-offs.
+                                <p class="description" style="margin-bottom: 1rem; font-size: 1.125rem;">
+                                    <span style="color: #f9f9f9;">Creed's professional consultation services</span> provide expert guidance to help teams develop internal policies, design incident response plans, establish risk management frameworks, and guide decision-making on complex security trade-offs.
                                 </p>
-                                <p class="description" style="margin-bottom: 0; font-style: italic; color: #888;">
+                                <p class="description" style="margin-bottom: 1; font-size: 1.125rem;">
                                     The framework gives you the structure; our consultation helps you build the substance.
                                 </p>
+                                <div class="consultation-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                                    <button class="btn btn-primary-consultation" onclick="window.open('https://thecreed.xyz/riskassessments', '_blank')" style="background: #2a2a2a; color: #73f36c; border: none; padding: 0.75rem 2rem; border-radius: 100px; font-size: 0.75rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer;">
+                                        View Past Assessments
+                                    </button>
+                                    <button class="btn btn-primary-consultation" onclick="window.open('https://form.typeform.com/to/nlWHgMTF', '_blank')" style="background: #2a2a2a; color: #73f36c; border: none; padding: 0.75rem 2rem; border-radius: 100px; font-size: 0.75rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer;">
+                                        Schedule a Consultation
+                                    </button>
+                                </div>
                             </div>
 
                             <div class="about-creed-hero">
@@ -338,67 +350,89 @@
                                 </p>
                             </div>
 
-                            <div class="open-source-note">
-                                <h4>Open Source Framework</h4>
-                                <p>This assessment framework is open source, designed to democratize cybersecurity risk assessment while supporting the professional services offered by the Creed collective.</p>
+                            <div class="open-source-note" style="background: #1a1a1a; padding: 1.5rem; margin: 1.5rem 0; border-radius: 20px;">
+                                <h4 style="color: #eff8ed; margin-bottom: 1rem; font-weight: 500; font-size: 1.25rem;">Open Source Framework</h4>
+                                <p class="description" style="margin-bottom: 0; font-size: 1.125rem;">This assessment framework is open source, designed to democratize cybersecurity risk assessment while supporting the professional services offered by the Creed collective.</p>
                             </div>
 
-                            <div class="bottom-sections-grid">
-                                <div class="links-section">
-                                    <h4>Learn More & View Past Assessments</h4>
-                                    <div class="external-links">
-                                        <a href="https://thecreed.xyz/riskassessments" target="_blank" class="external-link">
-                                            View Published Risk Assessments
-                                        </a>
-                                        <a href="https://thecreed.xyz" target="_blank" class="external-link">
-                                            Visit Creed Website
-                                        </a>
+                            <div class="partners-section" style="text-align: center; margin: 2rem 0;">
+                                <div class="partners-header" style="margin-bottom: 1rem;">
+                                    <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                        <div style="flex: 1; height: 1px; background: rgba(255, 255, 255, 0.2);"></div>
+                                        <h4 style="color: #eff8ed; font-size: 1.5rem; font-weight: 500; margin: 0; white-space: nowrap;">Partners</h4>
+                                        <div style="flex: 1; height: 1px; background: rgba(255, 255, 255, 0.2);"></div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; margin-top: 1rem;">
+                                        <a href="https://www.turtle.xyz/" target="_blank" class="partner-link"> <img src="assets/Turtle-club-Full-NeonGReen.svg" alt="Turtle" style="height: 1.25rem; width: auto;"></a>
+                                        <a href="https://thecreed.xyz/" target="_blank" class="partner-link"> <img src="assets/creed-red-bold.svg" alt="Creed" style="height: 1.25rem; width: auto;"></a>
                                     </div>
                                 </div>
 
-                                <div class="partners-section-right">
-                                    <h4>Partners</h4>
-                                    <div class="methodology-partner">
-                                        <a href="https://turtle.club" target="_blank" class="turtle-link">
-                                            <img src="assets/Turtle-club-Full-NeonGReen.svg" alt="Turtle Club Partner" class="turtle-logo-large">
-                                        </a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
                         <div class="about-section">
                             <h3>The Six Critical Functions</h3>
-                            <div class="functions-grid">
+                            <div class="functions-grid" style="padding: 1.25rem; background-color: #141514; border-radius: 20px; box-shadow: 0px 4px 40px 0px rgba(0,0,0,0.80); outline: 0.60px solid rgba(249, 249, 249, 0.1); outline-offset: -0.60px;">
                                 <div class="function-card govern-card">
-                                    <h4 class="function-card-title govern">Govern</h4>
+                                    <h4 class="function-card-title govern" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <img src="assets/badges/1.svg" alt="" class="function-badge-icon">
+                                            Govern
+                                        </span>
+                                        <span class="control-count govern">31 Controls</span>
+                                    </h4>
                                     <p>Establish cybersecurity risk management strategy, expectations, and policy framework.</p>
-                                    <span class="control-count govern">31 Controls</span>
                                 </div>
                                 <div class="function-card identify-card">
-                                    <h4 class="function-card-title identify">Identify</h4>
+                                    <h4 class="function-card-title identify" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <img src="assets/badges/2.svg" alt="" class="function-badge-icon">
+                                            Identify
+                                        </span>
+                                        <span class="control-count identify">21 Controls</span>
+                                    </h4>
                                     <p>Understand organizational assets, suppliers, and related cybersecurity risks.</p>
-                                    <span class="control-count identify">21 Controls</span>
                                 </div>
                                 <div class="function-card protect-card">
-                                    <h4 class="function-card-title protect">Protect</h4>
+                                    <h4 class="function-card-title protect" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <img src="assets/badges/3.svg" alt="" class="function-badge-icon">
+                                            Protect
+                                        </span>
+                                        <span class="control-count protect">22 Controls</span>
+                                    </h4>
                                     <p>Implement safeguards to manage cybersecurity risks and prevent incidents.</p>
-                                    <span class="control-count protect">22 Controls</span>
                                 </div>
                                 <div class="function-card detect-card">
-                                    <h4 class="function-card-title detect">Detect</h4>
+                                    <h4 class="function-card-title detect" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <img src="assets/badges/4.svg" alt="" class="function-badge-icon">
+                                            Detect
+                                        </span>
+                                        <span class="control-count detect">11 Controls</span>
+                                    </h4>
                                     <p>Identify cybersecurity attacks and compromises in a timely manner.</p>
-                                    <span class="control-count detect">11 Controls</span>
                                 </div>
                                 <div class="function-card respond-card">
-                                    <h4 class="function-card-title respond">Respond</h4>
+                                    <h4 class="function-card-title respond" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <img src="assets/badges/5.svg" alt="" class="function-badge-icon">
+                                            Respond
+                                        </span>
+                                        <span class="control-count respond">13 Controls</span>
+                                    </h4>
                                     <p>Take appropriate action regarding detected cybersecurity incidents.</p>
-                                    <span class="control-count respond">13 Controls</span>
                                 </div>
                                 <div class="function-card recover-card">
-                                    <h4 class="function-card-title recover">Recover</h4>
+                                    <h4 class="function-card-title recover" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <img src="assets/badges/6.svg" alt="" class="function-badge-icon">
+                                            Recover
+                                        </span>
+                                        <span class="control-count recover">8 Controls</span>
+                                    </h4>
                                     <p>Restore assets and operations affected by cybersecurity incidents.</p>
-                                    <span class="control-count recover">8 Controls</span>
                                 </div>
                             </div>
                         </div>
@@ -410,39 +444,39 @@
                             </p>
                             <div class="process-steps">
                                 <div class="step">
-                                    <div class="step-number">1</div>
-                                    <div class="step-content">
+                                    <div class="step-header">
+                                        <div class="step-number">1</div>
                                         <h4>Pre-Interview Questionnaire</h4>
-                                        <p>Initial information gathering to understand the client's risk profile and identify areas requiring deeper exploration.</p>
                                     </div>
+                                    <p>Initial information gathering to understand the client's risk profile and identify areas requiring deeper exploration.</p>
                                 </div>
                                 <div class="step">
-                                    <div class="step-number">2</div>
-                                    <div class="step-content">
+                                    <div class="step-header">
+                                        <div class="step-number">2</div>
                                         <h4>One-Hour Interview</h4>
-                                        <p>Detailed interview with stakeholders following structured guidelines to gather comprehensive insights.</p>
                                     </div>
+                                    <p>Detailed interview with stakeholders following structured guidelines to gather comprehensive insights.</p>
                                 </div>
                                 <div class="step">
-                                    <div class="step-number">3</div>
-                                    <div class="step-content">
+                                    <div class="step-header">
+                                        <div class="step-number">3</div>
                                         <h4>Recording and Documentation</h4>
-                                        <p>All interviews are recorded with detailed notes to ensure accurate assessment completion.</p>
                                     </div>
+                                    <p>All interviews are recorded with detailed notes to ensure accurate assessment completion.</p>
                                 </div>
                                 <div class="step">
-                                    <div class="step-number">4</div>
-                                    <div class="step-content">
+                                    <div class="step-header">
+                                        <div class="step-number">4</div>
                                         <h4>Report Compilation</h4>
-                                        <p>Comprehensive analysis and report creation based on collected data and expert evaluation.</p>
                                     </div>
+                                    <p>Comprehensive analysis and report creation based on collected data and expert evaluation.</p>
                                 </div>
                                 <div class="step">
-                                    <div class="step-number">5</div>
-                                    <div class="step-content">
+                                    <div class="step-header">
+                                        <div class="step-number">5</div>
                                         <h4>Peer Review</h4>
-                                        <p>Independent team review ensures accuracy, consistency, and objective evaluation of all assessments.</p>
                                     </div>
+                                    <p>Independent team review ensures accuracy, consistency, and objective evaluation of all assessments.</p>
                                 </div>
                             </div>
                         </div>
@@ -454,27 +488,63 @@
                             </p>
                             <div class="tiers-grid">
                                 <div class="tier-card tier-0">
-                                    <h4>Tier 0: Non-existent</h4>
+                                    <div class="tier-header">
+                                        <span class="tier-badge">
+                                            <div class="tier-indicator"></div>
+                                            Tier 0
+                                        </span>
+                                        <span class="tier-title">Non-existent</span>
+                                    </div>
                                     <p>Risk governance and management practices are not defined or performed.</p>
                                 </div>
                                 <div class="tier-card tier-1">
-                                    <h4>Tier 1: Initial</h4>
+                                    <div class="tier-header">
+                                        <span class="tier-badge">
+                                            <div class="tier-indicator"></div>
+                                            Tier 1
+                                        </span>
+                                        <span class="tier-title">Initial</span>
+                                    </div>
                                     <p>Risk management performed informally on an ad hoc, case-by-case basis.</p>
                                 </div>
                                 <div class="tier-card tier-2">
-                                    <h4>Tier 2: Repeatable</h4>
+                                    <div class="tier-header">
+                                        <span class="tier-badge">
+                                            <div class="tier-indicator"></div>
+                                            Tier 2
+                                        </span>
+                                        <span class="tier-title">Repeatable</span>
+                                    </div>
                                     <p>Risk management practices are approved by management but may lack organization-wide policy.</p>
                                 </div>
                                 <div class="tier-card tier-3">
-                                    <h4>Tier 3: Defined</h4>
+                                    <div class="tier-header">
+                                        <span class="tier-badge">
+                                            <div class="tier-indicator"></div>
+                                            Tier 3
+                                        </span>
+                                        <span class="tier-title">Defined</span>
+                                    </div>
                                     <p>Well-defined policies and processes documented, standardized, and integrated across the organization.</p>
                                 </div>
                                 <div class="tier-card tier-4">
-                                    <h4>Tier 4: Capable</h4>
+                                    <div class="tier-header">
+                                        <span class="tier-badge">
+                                            <div class="tier-indicator"></div>
+                                            Tier 4
+                                        </span>
+                                        <span class="tier-title">Capable</span>
+                                    </div>
                                     <p>Quantitatively controlled risk management with formally approved and expressed policies.</p>
                                 </div>
                                 <div class="tier-card tier-5">
-                                    <h4>Tier 5: Efficient</h4>
+                                    <div class="tier-header">
+                                        <span class="tier-badge">
+                                            <div class="tier-indicator"></div>
+                                            Tier 5
+                                        </span>
+                                        <span class="tier-title">Efficient</span>
+                                    </div>
                                     <p>Continuously improving, world-class practices with organization-wide risk culture integration.</p>
                                 </div>
                             </div>
@@ -486,19 +556,31 @@
 
         <!-- CTA Section -->
         <section class="cta-section">
+            <img src="assets/turtles/turtle-1.png" alt="" class="turtle-decoration turtle-1">
+            <img src="assets/turtles/turtle-2.png" alt="" class="turtle-decoration turtle-2">
+            <img src="assets/turtles/turtle-3.png" alt="" class="turtle-decoration turtle-3">
             <div class="cta-content">
-                <h2>Protect Your Business, Investors, and Users</h2>
+                <h2>Protect Your Business,<br>Investors, and Users</h2>
                 <div class="cta-features">
                     <div class="feature">
-                        <h4>Expert Analysis</h4>
+                        <div class="feature-header">
+                            <img src="assets/status.svg" alt="" class="feature-icon">
+                            <h4>Expert Analysis</h4>
+                        </div>
                         <p>Detailed 1-hour interviews with security professionals</p>
                     </div>
                     <div class="feature">
-                        <h4>Peer Review</h4>
+                        <div class="feature-header">
+                            <img src="assets/status.svg" alt="" class="feature-icon">
+                            <h4>Peer Review</h4>
+                        </div>
                         <p>Double-checked assessments for accuracy and completeness</p>
                     </div>
                     <div class="feature">
-                        <h4>Actionable Report</h4>
+                        <div class="feature-header">
+                            <img src="assets/status.svg" alt="" class="feature-icon">
+                            <h4>Actionable Report</h4>
+                        </div>
                         <p>Comprehensive report with improvement recommendations</p>
                     </div>
                 </div>
@@ -509,7 +591,6 @@
         </section>
 
         <footer class="footer">
-            <p>&copy; 2025 Creed Collective. Web3 Risk Assessment Framework</p>
             <div class="footer-links">
                 <a href="https://thecreed.xyz" target="_blank" class="footer-icon-link" title="Visit Creed Website">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -528,6 +609,8 @@
                 </a>
                 <button id="clearCacheBtn" class="clear-cache-btn" title="Clear all saved data">Clear Cache</button>
             </div>
+            <p>&copy; 2025 Creed Collective. Web3 Risk Assessment Framework</p>
+
         </footer>
     </div>
 
