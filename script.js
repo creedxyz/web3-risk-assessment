@@ -48,6 +48,7 @@ const exportBtn = document.getElementById('exportBtn');
 const exportPdfBtn = document.getElementById('exportPdfBtn');
 const fileInput = document.getElementById('fileInput');
 const clearCacheBtn = document.getElementById('clearCacheBtn');
+const mobileTabDropdown = document.getElementById('mobile-tab-dropdown');
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', async function() {
@@ -91,6 +92,14 @@ function initializeTabs() {
         });
     });
 
+    // Mobile dropdown tab switching
+    if (mobileTabDropdown) {
+        mobileTabDropdown.addEventListener('change', function() {
+            const targetTab = this.value;
+            switchTab(targetTab);
+        });
+    }
+
     // Set initial state: About active by default
     switchPrimaryTab('about');
 }
@@ -121,6 +130,11 @@ function switchTab(targetTab) {
     const targetButton = document.querySelector(`[data-tab="${targetTab}"]`);
     if (targetButton) {
         targetButton.classList.add('active');
+    }
+
+    // Update mobile dropdown
+    if (mobileTabDropdown) {
+        mobileTabDropdown.value = targetTab;
     }
 
     // Update tab content
